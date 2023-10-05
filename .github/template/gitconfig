@@ -1,0 +1,3 @@
+[template]
+	repo = kea-dev/github-projects-intro
+	issue-label = template

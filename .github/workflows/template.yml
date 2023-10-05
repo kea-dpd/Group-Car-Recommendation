@@ -1,0 +1,42 @@
+name: Initial commit workflow
+
+on:
+  push:
+    branches:
+      - '**' 
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+permissions:
+  checks: write
+  actions: write
+  contents: read
+  issues: write
+
+jobs:
+  cpissues:
+    name: "Initial commit only"
+    runs-on: ubuntu-latest
+    if: ${{ contains(github.event.head_commit.message, 'Initial commit') }}
+    steps:       
+      - name: "Checkout"
+        uses: actions/checkout@v3
+        
+      - name: "Raise semaphore or quit"
+        run: |
+          if $(gh workflow disable template.yml); then
+            echo ::notice title=Workflow successfully disabled::This also works as a raised semaphore - parallel workflow runs will see it and cancel
+          else
+            echo "::warning title=Another job got here first::This room is crowded - I'm outta here!"
+            curl -X POST \
+              -H "Accept: application/vnd.github.v3+json" \
+              -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+              https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/cancel
+              exit 1
+          fi
+          
+      - name: "Copying issues over"
+        run: .github/template/cpissues.sh
+        
+      - name: "List the issues copied"
+        run: gh issue list -s all
