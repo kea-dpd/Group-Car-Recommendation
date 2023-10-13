@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NyVogn</title>
+    <link rel="stylesheet" type="text/css" href="styles.css"> <!-- Link to the CSS file -->
+</head>
+<body>
+    <h1>Find your new car</h1>
+
+    <!-- Filter Form -->
+    <form id="filter-form">
+        <label for="type">Select Type:</label>
+        <select id="type" name="type">
+            <option value="">All</option>
+            <option value="SUV">SUV</option>
+            <option value="Stationcar">Stationcar</option>
+            <option value="Mini">Mini</option>
+            <option value="Hatchback">Hatchback</option>
+            <option value="Coupe">Coupé</option>
+            <option value="Exclusive">Exclusive</option>
+            <option value="Cabriolet">Cabriolet</option>
+            <option value="Sport">Sport</option>
+            <option value="Sport Coupe">Sport Coupé</option>
+            <option value="Sport Exclusive">Sport Exclusive</option>
+            <option value="Sport Hatchback">Sport Hatchback</option>
+            <option value="Sport Stationcar">Sport Stationcar</option>
+            <option value="Sport SUV">Sport SUV</option>
+            <option value="Super">Super</option>
+        </select>
+
+        <label for="drivlinje">Select Drivlinje:</label>
+        <select id="drivlinje" name="drivlinje">
+            <option value="">All</option>
+            <option value="El">Electric</option>
+            <option value="Hybrid">Hybrid</option>
+            <option value="Benzin">Benzin</option>
+            <option value="Diesel">Diesel</option>
+        </select>
+
+        <label for="budget">Select your max budget:</label>
+        <input type="range" id="budget" name="budget" min="260000" max="5000000" step="10000" value="5000000">
+        <span id="budget-value"></span>
+
+        <input type="submit" value="Filter">
+    </form>
+
+    
+    <div id="filtered-results">
+        <!-- Filtered Data will be displayed here -->
+    </div>
+
+    <!-- Include the Supabase JavaScript library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+     <!-- Include your external JavaScript file -->
+     <script src="script.js"></script>
+
+</body>
+</html>
+
+
+
+
+<!-- const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indhd2xpcG9maGxpeWhmeWV4aWpoIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTcxMDMxMTUsImV4cCI6MjAxMjY3OTExNX0.yxQ1aLlYN7ia6ceBYoFR9jQmMn9rxHJXH9d8lYOzWm4';
+
+
