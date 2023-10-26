@@ -1,0 +1,151 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px 300px 20px 300px;
+    background: #363636;
+}
+
+:root {
+    --background-color: #363636;
+  } 
+
+
+h1 {
+    text-align: center;
+    color: #fff;
+}
+
+p {
+    color: var(--background-color);
+    padding-bottom: 10px;
+}
+
+.flex{
+    display: flex;
+  }
+
+.center-vertical {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+nav{
+    margin: 0 auto;
+    width: 90%;
+    max-width: 1200px;
+    padding: 1.5em 0;
+    justify-content: space-between;
+  }
+
+.nav-img{
+    width: 10rem;
+  }
+  
+.nav-item{
+  padding: 25px 25px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: white;
+  text-decoration: none;
+}
+
+button{
+  padding: 0.7em 1em ;
+  background-color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.type-header {
+    font-weight: bold;
+    color: #fff; 
+    padding-left: 20px;
+}
+
+.card {
+    width: calc(33.33% - 40px); /* 33.33% to display three items in a row with spacing */
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+.car-image {
+    max-width: 100%;
+    border-radius: 10px 10px 0px 0px;
+    height: auto;
+    overflow: hidden;
+}
+
+.model-name {
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 10px;
+    padding-left: 10px;
+}
+
+/* Styling for the car specifications */
+.car-specs {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0px 0px 10px 10px;
+    padding: 10px;
+    background-color: lightgrey;
+    display: flex;
+}
+
+.car-carousel.slick-initialized.slick-slider button.slick-prev {
+    left: 25px; /* Position the button to the left edge of the container */
+    top: 50%; /* Position the button vertically centered */
+    transform: translateY(-50%); /* Vertically center the button */
+    z-index: 1; /* Ensure the button is in front */
+}
+
+.car-carousel.slick-initialized.slick-slider button.slick-next {
+    right: 35px; /* Position the button to the left edge of the container */
+    top: 50%; /* Position the button vertically centered */
+    transform: translateY(-50%); /* Vertically center the button */
+    z-index: 1; /* Ensure the button is in front */
+}
+
+.slick-prev:before {
+    color: black;
+    font-size: 30px;
+}
+
+.slick-next:before {
+    color: black;
+    font-size: 30px;
+}
+
+/* Styling for individual specification items */
+.spec {
+    width: 33%; /* Adjust the width as needed to fit your layout */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Styling for specification labels */
+.spec-label {
+    padding: 5px;
+}
+
+/* Styling for specification values */
+.spec-value {
+    font-weight: bold;
+    padding: 5px;
+}
+
+
+
+/* CSS for mobile-friendly layout */
+@media (max-width: 768px) {
+    .car-carousel.slick-initialized.slick-slider {
+        width: 100%; /* Make the carousel full width on smaller screens */
+    }
+
+    body {
+        margin: 10px;
+    }
+}
