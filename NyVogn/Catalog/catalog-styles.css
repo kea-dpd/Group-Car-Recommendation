@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    margin: 20px 300px 20px 300px;
+    margin: 20px 150px 20px 150px;
     background: #363636;
 }
 
@@ -129,12 +129,14 @@ button{
 /* Styling for specification labels */
 .spec-label {
     padding: 5px;
+    font-size: 0.7vw; /* Adjust the font size based on viewport width */
 }
 
 /* Styling for specification values */
 .spec-value {
     font-weight: bold;
     padding: 5px;
+    font-size: 0.7vw; /* Adjust the font size based on viewport width */
 }
 
 
@@ -147,5 +149,40 @@ button{
 
     body {
         margin: 10px;
+    }
+
+    .spec-label {
+        padding: 5px;
+        font-size: 14px;
+    }
+    
+    /* Styling for specification values */
+    .spec-value {
+        font-weight: bold;
+        padding: 5px;
+        font-size: 14px;
+    }
+}
+
+/* CSS for mobile-friendly layout */
+@media (max-width: 1024px) {
+    .car-carousel.slick-initialized.slick-slider {
+        width: 100%; /* Make the carousel full width on smaller screens */
+    }
+
+    body {
+        margin: 20px;
+    }
+
+    .spec-label {
+        padding: 5px;
+        font-size: 14px;
+    }
+    
+    /* Styling for specification values */
+    .spec-value {
+        font-weight: bold;
+        padding: 5px;
+        font-size: 14px;
     }
 }

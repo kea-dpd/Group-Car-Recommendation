@@ -160,16 +160,16 @@ async function fetchAndGroupCarsByType() {
 
             // Check if the car's driveline is "Electric" before adding the specifications
             if (car['Drivlinje'] === 'Electric') {
-                specsContainer.appendChild(createSpec('Drive:', `${car['Drivlinje']}`));
-                specsContainer.appendChild(createSpec('Price:', `${formattedPrice} kr.`));
+                specsContainer.appendChild(createSpec('Drive', `${car['Drivlinje']}`));
+                specsContainer.appendChild(createSpec('Price', `${formattedPrice} kr.`));
                 
-                specsContainer.appendChild(createSpec('Range:', `${car['Raekkevidde']} km`));
-                specsContainer.appendChild(createSpec('Battery Capacity:', car['Batterikapacitet (Netto/Brutto)'].split("/").pop([1])));
+                specsContainer.appendChild(createSpec('Range', `${car['Raekkevidde']} km`));
+                specsContainer.appendChild(createSpec('Battery', car['Batterikapacitet (Netto/Brutto)'].split("/").pop([1])));
             }   else {
-                specsContainer.appendChild(createSpec('Drive:', `${car['Drivlinje']}`));
-                specsContainer.appendChild(createSpec('Price:', `${formattedPrice} kr.`));
+                specsContainer.appendChild(createSpec('Drive', `${car['Drivlinje']}`));
+                specsContainer.appendChild(createSpec('Price', `${formattedPrice} kr.`));
                 specsContainer.appendChild(createSpec('Green Tax', `${formattedCo2Price} kr.`)); // Display "N/A" for range
-                specsContainer.appendChild(createSpec('Consumption:', `${car['Forbrug ((kWh) / 100km)/(km/l))']} km/l`));
+                specsContainer.appendChild(createSpec('Consumption', `${car['Forbrug ((kWh) / 100km)/(km/l))']} km/l`));
             }
             // Add more specifications here
 
@@ -194,7 +194,14 @@ async function fetchAndGroupCarsByType() {
             slidesToScroll: 3,
             responsive: [
                 {
-                    breakpoint: 768,
+                    breakpoint: 1024, // Breakpoint for tablets
+                    settings: {
+                        slidesToShow: 2, // Set it to 2 to show 2 slides on tablets
+                        slidesToScroll: 2, // You can also set this to 2 if you want to scroll 2 slides at a time
+                    },
+                },
+                {
+                    breakpoint: 768, // Breakpoint for mobile (existing configuration)
                     settings: {
                         slidesToShow: 1,
                         slidesToScroll: 1,
