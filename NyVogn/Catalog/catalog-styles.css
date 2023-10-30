@@ -1,27 +1,27 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 20px 300px 20px 300px;
-    background: #363636;
+  font-family: Arial, sans-serif;
+  margin: 20px 300px 20px 300px;
+  background: #363636;
 }
 
 :root {
-    --background-color: #363636;
-  } 
-
+  --background-color: #363636;
+  --accent-color: #18a0fb;
+}
 
 h1 {
-    text-align: center;
-    color: #fff;
+  text-align: center;
+  color: #fff;
 }
 
 p {
-    color: var(--background-color);
-    padding-bottom: 10px;
+  color: var(--background-color);
+  padding-bottom: 10px;
 }
 
-.flex{
-    display: flex;
-  }
+.flex {
+  display: flex;
+}
 
 .center-vertical {
   display: flex;
@@ -29,123 +29,143 @@ p {
   align-items: center;
 }
 
-nav{
-    margin: 0 auto;
-    width: 90%;
-    max-width: 1200px;
-    padding: 1.5em 0;
-    justify-content: space-between;
-  }
+nav {
+  margin: 0 auto;
+  width: 90%;
+  max-width: 1200px;
+  padding: 1.5em 0;
+  justify-content: space-between;
+}
 
-.nav-img{
-    width: 10rem;
-  }
-  
-.nav-item{
-  padding: 25px 25px;
-  font-weight: 600;
-  text-transform: uppercase;
-  color: white;
+nav ul {
+  display: flex;
+  gap: 1rem;
+}
+.nav-item {
+  font-weight: 300;
+  font-family: "Montserrat", sans-serif;
+  text-transform: capitalize;
+  color: var(--accent-color);
   text-decoration: none;
 }
 
-button{
-  padding: 0.7em 1em ;
-  background-color: white;
+.nav_btn {
+  display: flex;
+  gap: 10px;
+}
+.standart_btn {
+  padding: 0.7em 1em;
+  background-color: var(--accent-color);
+  color: white;
+  font-family: "Montserrat", sans-serif;
   font-weight: 600;
-  text-transform: uppercase;
-  border-radius: 0.25rem;
+  text-transform: capitalize;
+  border-radius: 0.5rem;
+  border: solid var(--accent-color);
+  width: 8rem;
+  height: 3rem;
+  cursor: pointer;
+}
+.variation_btn {
+  padding: 0.7em 1em;
+  background-color: #00000000;
+  color: var(--accent-color);
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  text-transform: capitalize;
+  border-radius: 0.5rem;
+  border: solid var(--accent-color);
+  width: 8rem;
+  height: 3rem;
   cursor: pointer;
 }
 
 .type-header {
-    font-weight: bold;
-    color: #fff; 
-    padding-left: 20px;
+  font-weight: bold;
+  color: #fff;
+  padding-left: 20px;
 }
 
 .card {
-    width: calc(33.33% - 40px); /* 33.33% to display three items in a row with spacing */
-    margin-bottom: 20px;
-    padding: 20px;
+  width: calc(33.33% - 40px); /* 33.33% to display three items in a row with spacing */
+  margin-bottom: 20px;
+  padding: 20px;
 }
 
 .car-image {
-    max-width: 100%;
-    border-radius: 10px 10px 0px 0px;
-    height: auto;
-    overflow: hidden;
+  max-width: 100%;
+  border-radius: 10px 10px 0px 0px;
+  height: auto;
+  overflow: hidden;
 }
 
 .model-name {
-    font-weight: bold;
-    color: #fff;
-    margin-bottom: 10px;
-    padding-left: 10px;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 10px;
+  padding-left: 10px;
 }
 
 /* Styling for the car specifications */
 .car-specs {
-    max-width: 100%;
-    height: auto;
-    border-radius: 0px 0px 10px 10px;
-    padding: 10px;
-    background-color: lightgrey;
-    display: flex;
+  max-width: 100%;
+  height: auto;
+  border-radius: 0px 0px 10px 10px;
+  padding: 10px;
+  background-color: lightgrey;
+  display: flex;
 }
 
 .car-carousel.slick-initialized.slick-slider button.slick-prev {
-    left: 25px; /* Position the button to the left edge of the container */
-    top: 50%; /* Position the button vertically centered */
-    transform: translateY(-50%); /* Vertically center the button */
-    z-index: 1; /* Ensure the button is in front */
+  left: 25px; /* Position the button to the left edge of the container */
+  top: 50%; /* Position the button vertically centered */
+  transform: translateY(-50%); /* Vertically center the button */
+  z-index: 1; /* Ensure the button is in front */
 }
 
 .car-carousel.slick-initialized.slick-slider button.slick-next {
-    right: 35px; /* Position the button to the left edge of the container */
-    top: 50%; /* Position the button vertically centered */
-    transform: translateY(-50%); /* Vertically center the button */
-    z-index: 1; /* Ensure the button is in front */
+  right: 35px; /* Position the button to the left edge of the container */
+  top: 50%; /* Position the button vertically centered */
+  transform: translateY(-50%); /* Vertically center the button */
+  z-index: 1; /* Ensure the button is in front */
 }
 
 .slick-prev:before {
-    color: black;
-    font-size: 30px;
+  color: black;
+  font-size: 30px;
 }
 
 .slick-next:before {
-    color: black;
-    font-size: 30px;
+  color: black;
+  font-size: 30px;
 }
 
 /* Styling for individual specification items */
 .spec {
-    width: 33%; /* Adjust the width as needed to fit your layout */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  width: 33%; /* Adjust the width as needed to fit your layout */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Styling for specification labels */
 .spec-label {
-    padding: 5px;
+  padding: 5px;
 }
 
 /* Styling for specification values */
 .spec-value {
-    font-weight: bold;
-    padding: 5px;
+  font-weight: bold;
+  padding: 5px;
 }
-
-
 
 /* CSS for mobile-friendly layout */
 @media (max-width: 768px) {
-    .car-carousel.slick-initialized.slick-slider {
-        width: 100%; /* Make the carousel full width on smaller screens */
-    }
+  .car-carousel.slick-initialized.slick-slider {
+    width: 100%; /* Make the carousel full width on smaller screens */
+  }
 
-    body {
-        margin: 10px;
-    }
+  body {
+    margin: 10px;
+  }
 }
