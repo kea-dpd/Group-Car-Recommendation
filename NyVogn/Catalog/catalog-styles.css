@@ -1,27 +1,35 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 20px 150px 20px 150px;
-    background: #363636;
+  font-family: Arial, sans-serif;
+  margin: 20px 150px 20px 150px;
+  background: var(--background-color);
+  color: var(--text-color);
 }
 
 :root {
-    --background-color: #363636;
-  } 
-
+  --text-color: #f5f4f4;
+  --background-color: #232222;
+  --seethrough-color: #232222dd;
+  --light-black: #2d2c2c;
+  --lighter-black: #3d3c3c;
+  --accent-color: #18a0fb;
+  --gray: #969696;
+  --orange: #d4741c;
+  --green: #9ef890;
+}
 
 h1 {
-    text-align: center;
-    color: #fff;
+  text-align: center;
+  color: var(--text-color);
 }
 
 p {
-    color: var(--background-color);
-    padding-bottom: 10px;
+  color: var(--background-color);
+  padding-bottom: 10px;
 }
 
-.flex{
-    display: flex;
-  }
+.flex {
+  display: flex;
+}
 
 .center-vertical {
   display: flex;
@@ -29,160 +37,143 @@ p {
   align-items: center;
 }
 
-nav{
-    margin: 0 auto;
-    width: 90%;
-    max-width: 1200px;
-    padding: 1.5em 0;
-    justify-content: space-between;
-  }
-
-.nav-img{
-    width: 10rem;
-  }
-  
-.nav-item{
-  padding: 25px 25px;
-  font-weight: 600;
-  text-transform: uppercase;
-  color: white;
-  text-decoration: none;
-}
-
-button{
-  padding: 0.7em 1em ;
-  background-color: white;
-  font-weight: 600;
-  text-transform: uppercase;
-  border-radius: 0.25rem;
-  cursor: pointer;
-}
-
 .type-header {
-    font-weight: bold;
-    color: #fff; 
-    padding-left: 20px;
+  font-weight: bold;
+  color: var(--text-color);
+  padding-left: 20px;
 }
 
 .card {
-    width: calc(33.33% - 40px); /* 33.33% to display three items in a row with spacing */
-    margin-bottom: 20px;
-    padding: 20px;
+  /* width: calc(33.33% - 40px); */ /* 33.33% to display three items in a row with spacing */
+  margin-bottom: 20px;
+  padding: 20px;
+  max-width: 380px; /* delete when fix1 has been completed */
 }
-
+/* fix1 = add these two in js with if-sentece */
+/* .max-width {
+  max-width: 380px;
+}
+.img-height {
+  height: 120px;
+} */
 .car-image {
-    max-width: 100%;
-    border-radius: 10px 10px 0px 0px;
-    height: auto;
-    overflow: hidden;
+  max-width: 100%;
+  border-radius: 10px 10px 0px 0px;
+  height: 120px; /* delete when fix1 has been completed */
+  overflow: hidden;
 }
 
 .model-name {
-    font-weight: bold;
-    color: #fff;
-    margin-bottom: 10px;
-    padding-left: 10px;
+  font-weight: bold;
+  color: var(--text-color);
+  margin-bottom: 10px;
+  padding-left: 10px;
 }
 
 /* Styling for the car specifications */
 .car-specs {
-    max-width: 100%;
-    height: auto;
-    border-radius: 0px 0px 10px 10px;
-    padding: 10px;
-    background-color: lightgrey;
-    display: flex;
+  max-width: 100%;
+  height: auto;
+  border-radius: 0px 0px 10px 10px;
+  padding: 10px;
+  background-color: var(--light-black);
+  display: flex;
 }
 
 .car-carousel.slick-initialized.slick-slider button.slick-prev {
-    left: 25px; /* Position the button to the left edge of the container */
-    top: 50%; /* Position the button vertically centered */
-    transform: translateY(-50%); /* Vertically center the button */
-    z-index: 1; /* Ensure the button is in front */
+  /* left: 25px; */ /* Position the button to the left edge of the container */
+  top: 50%; /* Position the button vertically centered */
+  transform: translateY(-50%); /* Vertically center the button */
+  z-index: 1; /* Ensure the button is in front */
 }
 
 .car-carousel.slick-initialized.slick-slider button.slick-next {
-    right: 35px; /* Position the button to the left edge of the container */
-    top: 50%; /* Position the button vertically centered */
-    transform: translateY(-50%); /* Vertically center the button */
-    z-index: 1; /* Ensure the button is in front */
+  /* right: 35px; */ /* Position the button to the left edge of the container */
+  top: 50%; /* Position the button vertically centered */
+  transform: translateY(-50%); /* Vertically center the button */
+  z-index: 1; /* Ensure the button is in front */
 }
 
 .slick-prev:before {
-    color: black;
-    font-size: 30px;
+  color: var(--text-color);
+  font-size: 30px;
 }
 
 .slick-next:before {
-    color: black;
-    font-size: 30px;
+  color: var(--text-color);
+  font-size: 30px;
 }
 
 /* Styling for individual specification items */
 .spec {
-    width: 33%; /* Adjust the width as needed to fit your layout */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  width: 33%; /* Adjust the width as needed to fit your layout */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Styling for specification labels */
 .spec-label {
-    padding: 5px;
-    font-size: 0.7vw; /* Adjust the font size based on viewport width */
+  padding: 5px;
+  font-size: 0.7vw; /* Adjust the font size based on viewport width */
 }
 
 /* Styling for specification values */
 .spec-value {
-    font-weight: bold;
-    padding: 5px;
-    font-size: 0.7vw; /* Adjust the font size based on viewport width */
+  font-weight: bold;
+  padding: 5px;
+  font-size: 0.7vw; /* Adjust the font size based on viewport width */
 }
-
-
 
 /* CSS for mobile-friendly layout */
 @media (max-width: 768px) {
-    .car-carousel.slick-initialized.slick-slider {
-        width: 100%; /* Make the carousel full width on smaller screens */
-    }
+  .car-carousel.slick-initialized.slick-slider {
+    width: 100%; /* Make the carousel full width on smaller screens */
+  }
 
-    body {
-        margin: 10px;
-    }
+  body {
+    margin: 10px;
+  }
 
-    .spec-label {
-        padding: 5px;
-        font-size: 14px;
-    }
-    
-    /* Styling for specification values */
-    .spec-value {
-        font-weight: bold;
-        padding: 5px;
-        font-size: 14px;
-    }
+  .spec-label {
+    padding: 5px;
+    font-size: 14px;
+  }
+
+  /* Styling for specification values */
+  .spec-value {
+    font-weight: bold;
+    padding: 5px;
+    font-size: 14px;
+  }
 }
 
 /* CSS for mobile-friendly layout */
 @media (max-width: 1024px) {
-    .car-carousel.slick-initialized.slick-slider {
-        width: 100%; /* Make the carousel full width on smaller screens */
-    }
+  .car-carousel.slick-initialized.slick-slider {
+    width: 100%; /* Make the carousel full width on smaller screens */
+  }
 
-    body {
-        margin: 20px;
-    }
+  body {
+    margin: 20px;
+  }
 
-    .spec-label {
-        padding: 5px;
-        font-size: 14px;
-    }
-    
-    /* Styling for specification values */
-    .spec-value {
-        font-weight: bold;
-        padding: 5px;
-        font-size: 14px;
-    }
+  .spec-label {
+    padding: 5px;
+    font-size: 14px;
+  }
+
+  /* Styling for specification values */
+  .spec-value {
+    font-weight: bold;
+    padding: 5px;
+    font-size: 14px;
+  }
+  .car-carousel.slick-initialized.slick-slider button.slick-prev {
+    left: 25px; /* Position the button to the left edge of the container */
+  }
+
+  .car-carousel.slick-initialized.slick-slider button.slick-next {
+    right: 35px; /* Position the button to the left edge of the container */
+  }
 }

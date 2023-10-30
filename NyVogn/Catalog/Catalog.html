@@ -7,22 +7,29 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css">
     <link rel="stylesheet" type="text/css" href="catalog-styles.css"> <!-- Link to the CSS file -->
+    <link rel="stylesheet" href="/Group-Car-Recommendation/NyVogn/burgermenu.css">
 </head>
 <body>
     <header class="flex">
-        <div class="center-vertical">
-            <a href="Catalog.html"><img class="logo" src="img/WEKO Logo Blue.png" alt="Nyvogn"></a>
-        </div>
-        <nav class="flex">
-            <ul class="flex">
-                <li class="center-vertical"><a class="nav-item" href="/Group-Car-Recommendation/NyVogn/Catalog/Catalog.html">Catalog</a></li>
-                <li class="center-vertical"><a class="nav-item" href="">Recommendation</a></li>
-                <li class="center-vertical"><a class="nav-item" href="">Compare</a></li>
-                <li class="center-vertical"><a class="nav-item" href="/Group-Car-Recommendation/NyVogn/support.html">Support</a></li>
-            </ul>
-            <div class="center-vertical nav_btn">
-              <button class="variation_btn">Register</button>
-              <button class="standart_btn">Login</button>
+        <figure class="logo">
+            <a href="Catalog.html"><img src="/Group-Car-Recommendation/NyVogn/svg/placeholder-logo.svg" alt="Nyvogn"></a>
+        </figure>
+        <nav id="main_menu" class="flex">
+            <button class="toggle_button">
+                <img class="open_menu menu_icon" src="/Group-Car-Recommendation/NyVogn/svg/Hamburger_3.svg" alt="menu icon" />
+                <img class="close_menu menu_icon hide" src="/Group-Car-Recommendation/NyVogn/svg/Close_round.svg" alt="Close icon" />
+              </button>
+            <div id="flex_menu" class="menu hide">
+                <ul>
+                    <li class="center-vertical"><a class="nav-item" href="/Group-Car-Recommendation/NyVogn/Catalog/Catalog.html">Catalog</a></li>
+                    <li class="center-vertical"><a class="nav-item" href="">Recommendation</a></li>
+                    <li class="center-vertical"><a class="nav-item" href="">Compare</a></li>
+                    <li class="center-vertical"><a class="nav-item" href="/Group-Car-Recommendation/NyVogn/support.html">Support</a></li>
+                </ul>
+                <div class="center-vertical nav_btn menu">
+                  <button class="variation_btn">Register</button>
+                  <button class="standart_btn">Login</button>
+                </div>
             </div>
         </nav>
     </header>
@@ -39,6 +46,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script src="/Group-Car-Recommendation/NyVogn/burgermenu.js"></script>
 
     <script>
         const supabaseUrl = 'https://wawlipofhliyhfyexijh.supabase.co';

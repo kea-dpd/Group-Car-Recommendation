@@ -1,0 +1,147 @@
+@media (max-width: 939px) {
+  .logo {
+    height: 60px;
+  }
+  .logo img {
+    height: 60px;
+    margin: auto 0;
+    margin-left: -50px;
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    position: sticky;
+  }
+
+  #main_menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: end;
+    gap: 2rem;
+    height: auto;
+  }
+  .menu > ul {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    gap: 20px;
+    margin-right: 20px;
+  }
+  .nav_btn {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    gap: 10px;
+    margin-top: 40px;
+    margin-right: 20px;
+  }
+
+  /* .box_active {
+    background-color: var(--light-black);
+    box-shadow: 5px 5px 5px var(--light-black);
+    padding: 20px 5px;
+  } */
+
+  .toggle_button {
+    border: none;
+    background-color: rgba(0, 0, 0, 0);
+    width: 40px;
+  }
+
+  .menu_icon {
+    width: 40px;
+    margin: auto;
+  }
+
+  #on_site {
+    color: #ff8063;
+  }
+}
+
+/*   General   */
+.hide {
+  display: none;
+}
+.show {
+  display: block;
+}
+.nav-item {
+  font-weight: 300;
+  font-family: "Montserrat", sans-serif;
+  text-transform: capitalize;
+  color: var(--accent-color);
+  text-decoration: none;
+}
+.nav-item:hover {
+  color: var(--text-color);
+}
+.standart_btn {
+  padding: 0.7em 1em;
+  background-color: var(--accent-color);
+  color: white;
+  border-radius: 0.5rem;
+  border: solid var(--accent-color);
+  width: 7rem;
+  height: 2.5rem;
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+.variation_btn {
+  padding: 0.7em 1em;
+  background-color: rgba(255, 255, 255, 0);
+  color: var(--accent-color);
+  border-radius: 0.5rem;
+  border: solid var(--accent-color);
+  width: 7rem;
+  height: 2.5rem;
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+header {
+  position: sticky;
+  top: 0;
+  background-color: var(--seethrough-color);
+  z-index: 1;
+}
+
+/*   computer   */
+
+@media (min-width: 939px) {
+  .logo img {
+    height: 100px;
+  }
+  .logo {
+    height: 100px;
+    margin-left: 0;
+  }
+  nav {
+    max-width: 1200px;
+    padding: 1.5em 0;
+  }
+  nav ul {
+    display: flex;
+    gap: 1rem;
+  }
+  .nav_btn {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .toggle_button {
+    display: none;
+  }
+  .nav_btn {
+    justify-self: right;
+  }
+  #flex_menu {
+    display: flex;
+    gap: 30px;
+    justify-content: space-between;
+    margin: auto 0;
+  }
+}
