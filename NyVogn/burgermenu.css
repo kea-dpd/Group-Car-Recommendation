@@ -22,6 +22,9 @@
     gap: 2rem;
     height: auto;
   }
+  #flex_menu {
+    position: relative;
+  }
   .menu > ul {
     display: flex;
     flex-direction: column;
@@ -106,8 +109,11 @@
 header {
   position: sticky;
   top: 0;
+  left: 0;
   background-color: var(--seethrough-color);
-  z-index: 1;
+  width: 1350px;
+  z-index: 2;
+  margin-left: -50px;
 }
 
 /*   computer   */
@@ -131,6 +137,7 @@ header {
   .nav_btn {
     display: flex;
     gap: 0.5rem;
+    margin-left: 65%;
   }
   .toggle_button {
     display: none;
