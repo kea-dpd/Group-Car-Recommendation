@@ -1,51 +1,122 @@
 /* Add your custom CSS styles here to match your design */
 body {
-    font-family: Arial, sans-serif;
-    margin: 20px 150px 20px 150px;
-    background: #363636;
+  font-family: Arial, sans-serif;
+  margin: 20px 150px 20px 150px;
+  background: var(--background-color);
+  color: var(--text-color);
+}
+
+:root {
+  --text-color: #f5f4f4;
+  --background-color: #232222;
+  --seethrough-color: #232222dd;
+  --light-black: #2d2c2c;
+  --lighter-black: #3d3c3c;
+  --accent-color: #18a0fb;
+  --gray: #969696;
+  --orange: #d4741c;
+  --green: #9ef890;
 }
 
 h1 {
-    text-align: center;
-    color: #fff;
+  text-align: center;
+  color: #fff;
 }
 
-p {
-    color: #fff;
-    padding-bottom: 10px;
+/* p {
+  color: #fff;
+  padding-bottom: 10px;
+} */
+
+.standart_btn {
+  padding: 0.7em 1em;
+  background-color: var(--accent-color);
+  color: white;
+  border-radius: 0.5rem;
+  border: solid var(--accent-color);
+  width: auto;
+  height: 2.5rem;
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  text-transform: capitalize;
 }
 
 #car-details {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+  /*  max-width: 800px; */
+  margin: 0 auto;
+  padding: 20px;
+  background-color: var(--light-black);
+  padding: 5rem;
+  /*  border: 1px solid #ccc; */
+  border-radius: 10px;
 }
 
 #car-details img {
-    max-width: 100%;
-    height: auto;
-    margin-bottom: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+  /* border: 1px solid #ddd; */
+  border-radius: 10px;
 }
 
 .car-specs {
-    text-align: left;
-    margin: 20px 0;
+  text-align: left;
+  margin: 20px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.car-specs p:last-of-type,
+/* .car-specs p:nth-child(4),
+.car-specs p:nth-child(5),
+.car-specs p:nth-child(7),
+.car-specs p:nth-child(8), */
+.car-specs p:nth-child(13)
+/* .car-specs p:nth-child(16),
+.car-specs p:nth-child(17),
+.car-specs p:nth-child(18) */ {
+  display: none;
 }
 
 .car-specs p {
-    margin: 5px 0;
+  margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+  font-size: 0.8rem;
+}
+
+.car-specs p strong {
+  color: var(--accent-color);
+  font-weight: bolder;
+  font-size: 1rem;
+}
+
+.carDealers_flex {
+  display: flex;
+  justify-content: space-between;
+  margin: 50px 0px 10px 0px;
+}
+.carDealers_flex > div {
+  display: flex;
+  gap: 20px;
+  margin: auto 0;
+}
+.carDealers_flex > div p {
+  font-style: italic;
+  font-size: 0.8rem;
+}
+.carDealers_flex h2,
+.carDealers_flex button {
+  margin: auto 0;
 }
 
 #map {
-    height: 700px !important; /* Adjust brightness as needed (1.0 is the default) */
-    border-radius: 10px;
-
+  height: 700px !important; /* Adjust brightness as needed (1.0 is the default) */
+  border-radius: 10px;
 }
 
 #find-area-near-me {
-    margin-bottom: 20px;
+  /* margin-bottom: 20px; */
+  width: 11rem !important;
 }
