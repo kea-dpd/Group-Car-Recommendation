@@ -34,7 +34,7 @@ function toggleMenu() {
     close_menu.classList.add("show");
 
     // sæt boxshadow på menuen
-    /* menu.classList.add("box_active"); */
+    ul_menu.classList.add("box_active");
   } else {
     //console.log(ul_menu.classList.contains("show"));
 
@@ -46,7 +46,7 @@ function toggleMenu() {
     close_menu.classList.add("hide");
 
     // sæt boxshadow på menuen
-    /* menu.classList.remove("box_active"); */
+    ul_menu.classList.remove("box_active");
   }
 }
 
