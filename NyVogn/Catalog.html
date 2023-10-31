@@ -33,7 +33,6 @@
             </div>
         </nav>
     </header>
-  
     <h1>Catalog</h1>
 
     <!-- Results Container -->
@@ -49,6 +48,7 @@
     <script src="/NyVogn/burgermenu.js"></script>
 
     <script>
+
         const supabaseUrl = 'https://wawlipofhliyhfyexijh.supabase.co';
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indhd2xpcG9maGxpeWhmeWV4aWpoIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTcxMDMxMTUsImV4cCI6MjAxMjY3OTExNX0.yxQ1aLlYN7ia6ceBYoFR9jQmMn9rxHJXH9d8lYOzWm4';
 
@@ -220,9 +220,52 @@ async function fetchAndGroupCarsByType() {
         });
     }
 }
-
+    
 // Call the function to fetch and display cars
 fetchAndGroupCarsByType();
+    </script>     
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <h1>Welcome to Ny vogn</h1>
+            <p>Ny Vogn is a car recomandation site specializing in assisting you with finding your new perfect car.</p>
+            <p>For us to help you choose the perfect car for you, we would love to ask you a few questions about you and your needs.</p>
+            <div class="box">
+                <div class="box-content">
+                    <h3>Lets do it!</h3>
+                    <p>Perfect, let's get right to it!<br>Remember you can always change it later</p>
+                    <button>Answer Now</button>
+                </div>
+            </div>
+            <div class="box">
+                <div class="box-content">
+                    <h3>Not ready?</h3>
+                    <p>No problem.<br>You can always return to this later, by creating an account.</p>
+                    <a onclick="closeTheModal();"><button>Skip For Now</button></a>
+                </div>
+            </div>
+        </div>
+    </div> 
+    <script>
+        // Get references to the modal and close button
+        const modal = document.getElementById('myModal');
+        const closeModal = document.getElementById('closeModal');
+
+        // Function to open the modal
+        function openModal() {
+        modal.style.display = 'block';
+        }
+
+        // Function to close the modal
+        function closeTheModal() {
+        modal.style.display = 'none';
+        }
+
+        // Event listener to close the modal when the close button is clicked
+        closeModal.addEventListener('click', closeTheModal);
+
+        // Open the modal automatically when the page loads
+        window.addEventListener('load', openModal);
     </script>
 </body>
 </html>
