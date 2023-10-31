@@ -44,10 +44,10 @@ p {
 }
 
 .card {
-  /* width: calc(33.33% - 40px); */ /* 33.33% to display three items in a row with spacing */
+  width: calc(33.33% - 40px); /* 33.33% to display three items in a row with spacing */
   margin-bottom: 20px;
   padding: 20px;
-  max-width: 380px; /* delete when fix1 has been completed */
+  max-width: calc(33.33% - 40px);
 }
 /* fix1 = add these two in js with if-sentece */
 /* .max-width {
@@ -59,8 +59,10 @@ p {
 .car-image {
   max-width: 100%;
   border-radius: 10px 10px 0px 0px;
-  height: 120px; /* delete when fix1 has been completed */
+  height: auto;
   overflow: hidden;
+  aspect-ratio: 3;
+  object-fit: cover;
 }
 
 .model-name {
