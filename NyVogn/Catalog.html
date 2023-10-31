@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NyVogn</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css">
+    <link rel="stylesheet" type="text/css" href="/NyVogn/catalog-styles.css"> <!-- Link to the CSS file -->
+    <link rel="stylesheet" href="/NyVogn/burgermenu.css">
+</head>
+<body>
+    <header class="flex">
+        <figure class="logo">
+            <a href="Catalog.html"><img src="/NyVogn/svg/placeholder-logo.svg" alt="Nyvogn"></a>
+        </figure>
+        <nav id="main_menu" class="flex">
+            <button class="toggle_button">
+                <img class="open_menu menu_icon" src="/NyVogn/svg/Hamburger_3.svg" alt="menu icon" />
+                <img class="close_menu menu_icon hide" src="/NyVogn/svg/Close_round.svg" alt="Close icon" />
+              </button>
+            <div id="flex_menu" class="menu hide">
+                <ul>
+                    <li class="center-vertical"><a class="nav-item" href="/NyVogn/Catalog/Catalog.html">Catalog</a></li>
+                    <li class="center-vertical"><a class="nav-item" href="">Recommendation</a></li>
+                    <li class="center-vertical"><a class="nav-item" href="">Compare</a></li>
+                    <li class="center-vertical"><a class="nav-item" href="/NyVogn/support.html">Support</a></li>
+                </ul>
+                <div class="center-vertical nav_btn menu">
+                  <button class="variation_btn">Register</button>
+                  <button class="standart_btn">Login</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+  
+    <h1>Catalog</h1>
+
+    <!-- Results Container -->
+    <div id="filtered-results">
+        <!-- Filtered Data will be displayed here -->
+        <!-- Type Header Goes Here -->
+    </div>
+
+    <!-- Include the Supabase JavaScript library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script src="/NyVogn/burgermenu.js"></script>
+
+    <script>
+        const supabaseUrl = 'https://wawlipofhliyhfyexijh.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indhd2xpcG9maGxpeWhmeWV4aWpoIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTcxMDMxMTUsImV4cCI6MjAxMjY3OTExNX0.yxQ1aLlYN7ia6ceBYoFR9jQmMn9rxHJXH9d8lYOzWm4';
+
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        const resultsContainer = document.getElementById('filtered-results');
+
+// Fetch the car data and group them by type
+async function fetchAndGroupCarsByType() {
+    const { data, error } = await supabase.from('NyVogn').select('*');
+
+    if (error) {
+        console.error('Error fetching data:', error);
+        return;
+    }
+
+    // Group cars by type
+    const carsByType = {};
+    data.forEach((car) => {
+        const type = car['Type'];
+
+        if (!carsByType[type]) {
+            carsByType[type] = [];
+        }
+
+        carsByType[type].push(car);
+    });
+
+    // Display the cars grouped by type
+    for (const type in carsByType) {
+        const typeHeader = document.createElement('div');
+        typeHeader.className = 'type-header';
+
+        const typeHeaderH2 = document.createElement('h2');
+        typeHeaderH2.textContent = type;
+        typeHeader.appendChild(typeHeaderH2);
+
+        const carsContainer = document.createElement('div');
+        carsContainer.className = 'car-carousel';
+
+        carsByType[type].forEach((car) => {
+            const carCard = document.createElement('div');
+            carCard.className = 'card';
+            // Add a click event listener to each car card
+
+            // Variables to track mouse coordinates
+            let startX = 0;
+            let startY = 0;
+            let startTime = 0;
+
+            // Threshold in milliseconds for a valid click
+            const clickThreshold = 300; // Adjust as needed
+
+            // Add a mousedown event listener to the car card
+            carCard.addEventListener('mousedown', (event) => {
+                // Record the mouse coordinates and time on mousedown
+                startX = event.clientX;
+                startY = event.clientY;
+                startTime = Date.now();
+            });
+
+            // Add a mouseup event listener to handle the click action on mouseup
+            carCard.addEventListener('mouseup', (event) => {
+                // Check if it's a left-click (event.button === 0) and not a right-click (event.button === 2)
+                if (event.button === 0) {
+                    // Calculate the distance between the start and end positions
+                    const dx = event.clientX - startX;
+                    const dy = event.clientY - startY;
+
+                    // Calculate the time taken for the click
+                    const clickTime = Date.now() - startTime;
+
+                    // If the distance is greater than a threshold (e.g., 10) or the time is over the threshold, treat it as a drag
+                    if (Math.abs(dx) > 10 || Math.abs(dy) > 10 || clickTime >= clickThreshold) {
+                        // It's a drag, not a click
+                    } else {
+                        // Handle the click action
+                        window.location.href = `car-details.html?carId=${car['ID']}`;
+                    }
+                }
+            });
+
+
+            const modelName = document.createElement('div');
+            modelName.className = 'model-name';
+            modelName.textContent = car['Model name'];
+
+            const carImage = document.createElement('img');
+            carImage.className = 'car-image';
+            carImage.src = car['Image URL'];
+
+            // Specifications
+            const specsContainer = document.createElement('div');
+            specsContainer.className = 'car-specs'; // Apply the same styling as car-image
+
+            // Create and insert the specifications as div elements
+            const createSpec = (label, value) => {
+                const spec = document.createElement('div');
+                spec.className = 'spec';
+
+                const specLabel = document.createElement('span');
+                specLabel.className = 'spec-label';
+                specLabel.textContent = label;
+
+                const specValue = document.createElement('span');
+                specValue.className = 'spec-value';
+                specValue.textContent = value;
+
+                spec.appendChild(specLabel);
+                spec.appendChild(specValue);
+
+                return spec;
+            };
+            // Format the price with a thousand separator
+            const formattedPrice = car['Pris'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            const formattedCo2Price = car['Halvaarlig CO2-ejerafgift'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            
+
+            // Check if the car's driveline is "Electric" before adding the specifications
+            if (car['Drivlinje'] === 'Electric') {
+                specsContainer.appendChild(createSpec('Drive', `${car['Drivlinje']}`));
+                specsContainer.appendChild(createSpec('Price', `${formattedPrice} kr.`));
+                
+                specsContainer.appendChild(createSpec('Range', `${car['Raekkevidde']} km`));
+                specsContainer.appendChild(createSpec('Battery', car['Batterikapacitet (Netto/Brutto)'].split("/").pop([1])));
+            }   else {
+                specsContainer.appendChild(createSpec('Drive', `${car['Drivlinje']}`));
+                specsContainer.appendChild(createSpec('Price', `${formattedPrice} kr.`));
+                specsContainer.appendChild(createSpec('Green Tax', `${formattedCo2Price} kr.`)); // Display "N/A" for range
+                specsContainer.appendChild(createSpec('Consumption', `${car['Forbrug ((kWh) / 100km)/(km/l))']} km/l`));
+            }
+            // Add more specifications here
+
+            carCard.appendChild(modelName);
+            carCard.appendChild(carImage);
+            carCard.appendChild(specsContainer);
+            carsContainer.appendChild(carCard);
+        });
+
+        resultsContainer.appendChild(typeHeader);
+        resultsContainer.appendChild(carsContainer);
+
+        // Initialize the Slick Carousel after rendering the cars
+        let slidesToShow = 3; // Default value for showing 3 slides
+
+        if (carsByType[type].length < 3) {
+            slidesToShow = carsByType[type].length; // Set it to the number of items
+        }
+
+        $(carsContainer).slick({
+            slidesToShow: slidesToShow,
+            slidesToScroll: 3,
+            responsive: [
+                {
+                    breakpoint: 1024, // Breakpoint for tablets
+                    settings: {
+                        slidesToShow: 2, // Set it to 2 to show 2 slides on tablets
+                        slidesToScroll: 2, // You can also set this to 2 if you want to scroll 2 slides at a time
+                    },
+                },
+                {
+                    breakpoint: 768, // Breakpoint for mobile (existing configuration)
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                    },
+                },
+            ],
+        });
+    }
+}
+
+// Call the function to fetch and display cars
+fetchAndGroupCarsByType();
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+<!-- const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indhd2xpcG9maGxpeWhmeWV4aWpoIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTcxMDMxMTUsImV4cCI6MjAxMjY3OTExNX0.yxQ1aLlYN7ia6ceBYoFR9jQmMn9rxHJXH9d8lYOzWm4';
+
+
