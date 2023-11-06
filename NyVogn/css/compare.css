@@ -1,0 +1,132 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px 150px 20px 150px;
+  background: var(--background-color);
+  color: var(--text-color);
+}
+
+:root {
+  --text-color: #f5f4f4;
+  --background-color: #232222;
+  --seethrough-color: #232222dd;
+  --light-black: #2d2c2c;
+  --lighter-black: #3d3c3c;
+  --accent-color: #18a0fb;
+  --gray: #969696;
+  --orange: #d4741c;
+  --green: #9ef890;
+}
+.standart_btn {
+  padding: 0.7em 1em;
+  background-color: var(--accent-color);
+  color: white;
+  border-radius: 0.5rem;
+  border: solid var(--accent-color);
+  width: 7rem;
+  height: 2.5rem;
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+.standart_btn a {
+  color: var(--text-color);
+  text-decoration: none;
+}
+.variation_btn {
+  padding: 0.7em 1em;
+  background-color: rgba(255, 255, 255, 0);
+  color: var(--accent-color);
+  border-radius: 0.5rem;
+  border: solid var(--accent-color);
+  width: 7rem;
+  height: 2.5rem;
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+h1 {
+  grid-column: span 2;
+  grid-row: 1/2;
+  font-size: 3rem;
+  text-align: center;
+  justify-self: center;
+  color: var(--text-color);
+  margin: auto;
+}
+
+p {
+  color: var(--text-color);
+  padding-bottom: 10px;
+}
+
+.flex {
+  display: flex;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px 0px;
+  justify-items: center;
+}
+.choose {
+  background-color: var(--light-black);
+  border-radius: 10px;
+  height: 450px;
+  max-width: 420px;
+  padding: 20px 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+}
+.choose:first-of-type {
+  grid-column: 1/2;
+}
+.choose:last-of-type {
+  grid-column: 2/3;
+}
+.choose h2 {
+  padding-top: 20px;
+  font-size: 2.5rem;
+  margin-top: 40px;
+  font-weight: 600;
+}
+.choose > p {
+  line-height: 1.6rem;
+  font-weight: 100;
+}
+.flex_form {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+form {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  background-color: var(--light-black);
+}
+#pick_model {
+  background-color: var(--lighter-black);
+  color: var(--gray);
+  border: none;
+  border-radius: 6px;
+  padding: 10px 80px 10px 10px;
+}
+option {
+  color: var(--text-color);
+}
+form p {
+  font-size: 0.8rem;
+}
+.gray {
+  color: var(--gray);
+}
