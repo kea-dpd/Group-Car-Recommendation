@@ -159,58 +159,121 @@ function openstep4() {
     step4Modal.style.display = 'block';
 }
 
+
+
+
+
+
+
+// Get references to the checkboxes and containers
+const gasCheckbox = document.getElementById('gasCheckbox');
+const dieselCheckbox = document.getElementById('dieselCheckbox');
+const hybridCheckbox = document.getElementById('hybridCheckbox');
+const electricCheckbox = document.getElementById('electricCheckbox');
+const rangeContainer = document.querySelector('.range-container');
+const consumptionContainer = document.querySelector('.consumption-container');
+
+// Add event listeners to the checkboxes
+gasCheckbox.addEventListener('change', toggleContainers);
+dieselCheckbox.addEventListener('change', toggleContainers);
+hybridCheckbox.addEventListener('change', toggleContainers);
+electricCheckbox.addEventListener('change', toggleContainers);
+
+function toggleContainers() {
+    // Check the state of the checkboxes and toggle container visibility
+    if (electricCheckbox.checked) {
+        rangeContainer.style.display = 'block';
+    } else {
+        rangeContainer.style.display = 'none';
+    }
+
+    if (gasCheckbox.checked || dieselCheckbox.checked || hybridCheckbox.checked) {
+        consumptionContainer.style.display = 'block';
+    } else {
+        consumptionContainer.style.display = 'none';
+    }
+}
+
+// Initial call to set initial visibility
+toggleContainers();
+
+
+
+const rangeInput = document.getElementById('range');
+const rangeValue = document.getElementById('range-value');
+const rangeInputField = document.getElementById('range-input');
+
+// Update the displayed budget value as the slider is adjusted
+rangeInput.addEventListener('input', (e) => {
+    const value = e.target.value;
+    rangeValue.textContent = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    rangeInputField.value = value;
+});
+
+rangeInputField.addEventListener('input', (e) => {
+    const value = e.target.value;
+    rangeValue.textContent = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    rangeInput.value = value;
+});
+
+const consumptionRangeInput = document.getElementById('consumption-range');
+const consumptionRangeValue = document.getElementById('consumption-range-value');
+const consumptionInputField = document.getElementById('consumption-input');
+
+// Update the displayed budget value as the slider is adjusted
+consumptionRangeInput.addEventListener('input', (e) => {
+    const value = e.target.value;
+    consumptionRangeValue.textContent = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    consumptionInputField.value = value;
+});
+
+consumptionInputField.addEventListener('input', (e) => {
+    const value = e.target.value;
+    consumptionRangeValue.textContent = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    consumptionRangeInput.value = value;
+});
+
+
+
 $( ".grayed" ).click(function() {
     $(this).toggleClass('active');
 });
 
+
 const form = document.getElementById('multiStepForm');
-const resultsContainer2 = document.getElementById('filtered-results2');
 
 form.addEventListener('submit', async (e) => {
-    closeNewPageModal()
     e.preventDefault();
 
-    const type = form.type.value;
-    const drivlinje = form.drivlinje.value;
-    //const budget = parseInt(form.budget.value);
+    const selectedTypes = Array.from(document.querySelectorAll('input[name="Type"]:checked')).map((checkbox) => checkbox.value);
+    const selectedPropellants = Array.from(document.querySelectorAll('input[name="propellant"]:checked')).map((checkbox) => checkbox.value);
+    const rangeValue = document.getElementById('range-input').value; // Get range value
+    const consumptionValue = document.getElementById('consumption-input').value; // Get consumption value
 
-    const query = supabase.from('NyVogn').select('*');
+    // Check if either selectedTypes, selectedPropellants, rangeValue, or consumptionValue have values
+    if (selectedTypes.length > 0 || selectedPropellants.length > 0 || rangeValue || consumptionValue) {
+        const queryParams = [];
 
-    if (type) {
-        query.eq('Type', type);
-    }
+        if (selectedTypes.length > 0) {
+            queryParams.push(`type=${selectedTypes.join(',')}`);
+        }
 
-    if (drivlinje) {
-        query.eq('Drivlinje', drivlinje);
-    }
+        if (selectedPropellants.length > 0) {
+            queryParams.push(`propellant=${selectedPropellants.join(',')}`);
+        }
 
-    //query.lte('Pris', budget); // Use 'lte' to filter items with prices less than or equal to the budget.
+        if (rangeValue) {
+            queryParams.push(`range=${rangeValue}`);
+        }
 
-    const { data, error } = await query;
+        if (consumptionValue) {
+            queryParams.push(`consumption=${consumptionValue}`);
+        }
 
-    if (error) {
-        console.error('Error fetching data:', error);
-    } else {
-        // Clear previous results
-        resultsContainer2.innerHTML = '';
+        const queryString = queryParams.join('&');
+        const destinationURL = `Recommendation.html?${queryString}`;
 
-        // Display filtered data in a structured format
-        data.forEach((item) => {
-            const card = document.createElement('div');
-            card.className = 'card';
-
-            const modelName = document.createElement('div');
-            modelName.className = 'model-name';
-            modelName.textContent = item['Model name'];
-
-            const carImage = document.createElement('img');
-            carImage.className = 'car-image';
-            carImage.src = item['Image URL'];
-
-            card.appendChild(modelName);
-            card.appendChild(carImage);
-            resultsContainer2.appendChild(card);
-        });
+        window.location.href = destinationURL;
     }
 });
 
