@@ -340,10 +340,73 @@ p {
   display: none;
 }
 
-  /* Common style for the checkboxes with the "propellant-checkbox" class */
-  .propellant-checkbox:checked + label::before {
-    border: 2px solid #007bff; /* Blue border color */
-    background-color: #007bff; /* Blue circle background color */
+/* Hide the default checkbox */
+input[type="checkbox"] {
+  display: none;
+}
+
+/* Style the custom checkbox */
+.custom-checkbox {
+  margin-right: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%; /* Makes it round */
+    display: inline-block;
+    cursor: pointer;
+    background-color: var(--lighter-black);
+}
+
+/* Style the custom checkbox when it's checked */
+input[type="checkbox"]:checked + .custom-checkbox {
+    background-color: var(--accent-color); /* Grey background when checked */
+}
+
+.propellant-container {
+  text-align: left !important;
+}
+
+.propellant-container label{
+  width: 15%;
+  display: inline-flex;
+  align-items: center;
+}
+
+.range-container {
+  text-align: left;
+}
+
+.range-container #range-input, 
+.consumption-container #consumption-input {
+  background-color: var(--accent-color);
+}
+
+.range-container label, input{
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.consumption-container label, input{
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.consumption-container {
+  text-align: left;
+}
+
+#range-value,
+#consumption-range-value {
+  display: none;
+}
+
+#range-input,
+#consumption-input {
+  background-color: var(--lighter-black);
+  border: none;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
 }
 
 /* CSS for mobile-friendly layout */

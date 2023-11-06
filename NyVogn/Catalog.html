@@ -322,30 +322,54 @@ fetchAndGroupCarsByType();
                 <!-- Content for the new page goes here -->
                 <h1>Consumption</h1>
                 <p>Please select your preferred propellant, and your consumption requirements</p>
+                <div class="propellant-container">
+                    <p>Please select one or more propellants</p>
+                    
+                    <!-- Electric -->
+                    <label>
+                        <input type="checkbox" id="electricCheckbox" name="propellant" value="Electric" />
+                        <span class="custom-checkbox"></span>
+                        Electric
+                    </label>
+
+                    <!-- Hybrid -->
+                    <label>
+                        <input type="checkbox" id="hybridCheckbox" name="propellant" value="Hybrid" />
+                        <span class="custom-checkbox"></span>
+                        Hybrid
+                    </label>
+
+                    <!-- Gas -->
+                    <label>
+                        <input type="checkbox" id="gasCheckbox" name="propellant" value="Benzin" />
+                        <span class="custom-checkbox"></span>
+                        Gas
+                    </label>
+
+                    <!-- Diesel -->
+                    <label>
+                        <input type="checkbox" id="dieselCheckbox" name="propellant" value="Diesel" />
+                        <span class="custom-checkbox"></span>
+                        Diesel
+                    </label>
+
+                </div>
                 
-                <!-- Gas -->
-                <label>
-                    <input type="checkbox" id="gasCheckbox" name="propellant" value="Gas" />
-                    Gas
-                </label>
-
-                <!-- Diesel -->
-                <label>
-                    <input type="checkbox" id="dieselCheckbox" name="propellant" value="Diesel" />
-                    Diesel
-                </label>
-
-                <!-- Hybrid -->
-                <label>
-                    <input type="checkbox" id="hybridCheckbox" name="propellant" value="Hybrid" />
-                    Hybrid
-                </label>
-
-                <!-- Electric -->
-                <label>
-                    <input type="checkbox" id="electricCheckbox" name="propellant" value="Electric" />
-                    Electric
-                </label>
+                <div class="range-container">
+                    <p>Electric Range</p>
+                    <label for="range">Enter minimum range:</label>
+                    <input type="range" id="range" name="range" min="300" max="600" step="10" value="350">
+                    <input type="number" id="range-input" name="range-input" min="300" max="600" step="10" value="300">
+                    <span id="range-value"></span>  km
+                </div>
+                
+                <div class="consumption-container">
+                    <p>Km per liter</p>
+                    <label for="consumption-range">Enter minimum km per liter consumption:</label>
+                    <input type="range" id="consumption-range" name="consumption-range" min="0" max="100" step="1" value="0">
+                    <input type="number" id="consumption-input" name="consumption-input" min="0" max="100" step="1" value="0">
+                    <span id="consumption-range-value"></span>  km/l
+                </div>
 
                 <!-- Status bar with 4 steps -->
                 <div class="status-bar">

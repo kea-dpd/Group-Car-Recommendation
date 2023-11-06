@@ -3,11 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NyVogn</title>
+    <title>Recommendation Page</title>
+    <!-- Add the Supabase library -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css">
     <link rel="stylesheet" type="text/css" href="/NyVogn/css/catalog-styles.css"> <!-- Link to the CSS file -->
     <link rel="stylesheet" href="/NyVogn/css/burgermenu.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script src="/NyVogn/burgermenu.js"></script>
+
 </head>
 <body>
     <header class="flex">
@@ -23,7 +29,7 @@
                 <ul>
                     <li class="center-vertical"><a class="nav-item" href="/NyVogn/Catalog.html">Catalog</a></li>
                     <li class="center-vertical"><a class="nav-item" href="">Recommendation</a></li>
-                    <li class="center-vertical"><a class="nav-item" href="">Compare</a></li>
+                    <li class="center-vertical"><a class="nav-item" href="/NyVogn/compare.html">Compare</a></li>
                     <li class="center-vertical"><a class="nav-item" href="/NyVogn/support.html">Support</a></li>
                 </ul>
                 <div class="center-vertical nav_btn menu">
@@ -33,399 +39,237 @@
             </div>
         </nav>
     </header>
-    <h1>Catalog</h1>
-
-    <!-- Results Container -->
+    <h1>Recommendations</h1>
     <div id="filtered-results">
         <!-- Filtered Data will be displayed here -->
-        <!-- Type Header Goes Here -->
     </div>
 
-    <!-- Include the Supabase JavaScript library -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-    <script src="/NyVogn/burgermenu.js"></script>
-
     <script>
-
+        // Supabase configuration
         const supabaseUrl = 'https://wawlipofhliyhfyexijh.supabase.co';
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indhd2xpcG9maGxpeWhmeWV4aWpoIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTcxMDMxMTUsImV4cCI6MjAxMjY3OTExNX0.yxQ1aLlYN7ia6ceBYoFR9jQmMn9rxHJXH9d8lYOzWm4';
-
         const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
         const resultsContainer = document.getElementById('filtered-results');
 
-// Fetch the car data and group them by type
-async function fetchAndGroupCarsByType() {
-    const { data, error } = await supabase.from('NyVogn').select('*');
+        // Function to fetch and display cars based on filter criteria
+        async function fetchAndDisplayCars() {
+            // Extract filter criteria from URL query parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const selectedTypesParam = urlParams.get('type');
+            const selectedPropellantsParam = urlParams.get('propellant');
+            const selectedRange = urlParams.get('range');
+            const selectedConsumption = urlParams.get('consumption');
 
-    if (error) {
-        console.error('Error fetching data:', error);
-        return;
-    }
+            // Check if selectedTypesParam and selectedPropellantsParam are not null
+            const selectedTypes = selectedTypesParam ? selectedTypesParam.split(',') : [];
+            const selectedPropellants = selectedPropellantsParam ? selectedPropellantsParam.split(',') : [];
 
-    // Group cars by type
-    const carsByType = {};
-    data.forEach((car) => {
-        const type = car['Type'];
+            // Define two separate queries for electric and fossil-driven cars
+            const electricQuery = supabase.from('NyVogn').select('*');
+            const fossilQuery = supabase.from('NyVogn').select('*');
 
-        if (!carsByType[type]) {
-            carsByType[type] = [];
-        }
-
-        carsByType[type].push(car);
-    });
-
-    // Display the cars grouped by type
-    for (const type in carsByType) {
-        const typeHeader = document.createElement('div');
-        typeHeader.className = 'type-header';
-
-        const typeHeaderH2 = document.createElement('h2');
-        typeHeaderH2.textContent = type;
-        typeHeader.appendChild(typeHeaderH2);
-
-        const carsContainer = document.createElement('div');
-        carsContainer.className = 'car-carousel';
-
-        carsByType[type].forEach((car) => {
-            const carCard = document.createElement('div');
-            carCard.className = 'card';
-            // Add a click event listener to each car card
-
-            // Variables to track mouse coordinates
-            let startX = 0;
-            let startY = 0;
-            let startTime = 0;
-
-            // Threshold in milliseconds for a valid click
-            const clickThreshold = 300; // Adjust as needed
-
-            // Add a mousedown event listener to the car card
-            carCard.addEventListener('mousedown', (event) => {
-                // Record the mouse coordinates and time on mousedown
-                startX = event.clientX;
-                startY = event.clientY;
-                startTime = Date.now();
-            });
-
-            // Add a mouseup event listener to handle the click action on mouseup
-            carCard.addEventListener('mouseup', (event) => {
-                // Check if it's a left-click (event.button === 0) and not a right-click (event.button === 2)
-                if (event.button === 0) {
-                    // Calculate the distance between the start and end positions
-                    const dx = event.clientX - startX;
-                    const dy = event.clientY - startY;
-
-                    // Calculate the time taken for the click
-                    const clickTime = Date.now() - startTime;
-
-                    // If the distance is greater than a threshold (e.g., 10) or the time is over the threshold, treat it as a drag
-                    if (Math.abs(dx) > 10 || Math.abs(dy) > 10 || clickTime >= clickThreshold) {
-                        // It's a drag, not a click
-                    } else {
-                        // Handle the click action
-                        window.location.href = `car-details.html?carId=${car['ID']}`;
-                    }
-                }
-            });
-
-
-            const modelName = document.createElement('div');
-            modelName.className = 'model-name';
-            modelName.textContent = car['Model name'];
-
-            const carImage = document.createElement('img');
-            carImage.className = 'car-image';
-            carImage.src = car['Image URL'];
-
-            // Specifications
-            const specsContainer = document.createElement('div');
-            specsContainer.className = 'car-specs'; // Apply the same styling as car-image
-
-            // Create and insert the specifications as div elements
-            const createSpec = (label, value) => {
-                const spec = document.createElement('div');
-                spec.className = 'spec';
-
-                const specLabel = document.createElement('span');
-                specLabel.className = 'spec-label';
-                specLabel.textContent = label;
-
-                const specValue = document.createElement('span');
-                specValue.className = 'spec-value';
-                specValue.textContent = value;
-
-                spec.appendChild(specLabel);
-                spec.appendChild(specValue);
-
-                return spec;
-            };
-            // Format the price with a thousand separator
-            const formattedPrice = car['Pris'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-            const formattedCo2Price = car['Halvaarlig CO2-ejerafgift'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-            
-
-            // Check if the car's driveline is "Electric" before adding the specifications
-            if (car['Drivlinje'] === 'Electric') {
-                specsContainer.appendChild(createSpec('Drive', `${car['Drivlinje']}`));
-                specsContainer.appendChild(createSpec('Price', `${formattedPrice} kr.`));
-                
-                specsContainer.appendChild(createSpec('Range', `${car['Raekkevidde']} km`));
-                specsContainer.appendChild(createSpec('Battery', car['Batterikapacitet (Netto/Brutto)'].split("/").pop([1])));
-            }   else {
-                specsContainer.appendChild(createSpec('Drive', `${car['Drivlinje']}`));
-                specsContainer.appendChild(createSpec('Price', `${formattedPrice} kr.`));
-                specsContainer.appendChild(createSpec('Green Tax', `${formattedCo2Price} kr.`)); // Display "N/A" for range
-                specsContainer.appendChild(createSpec('Consumption', `${car['Forbrug ((kWh) / 100km)/(km/l))']} km/l`));
+            if (selectedTypes.length > 0) {
+                // Apply the selected types filter to both queries
+                electricQuery.in('Type', selectedTypes);
+                fossilQuery.in('Type', selectedTypes);
             }
-            // Add more specifications here
 
-            carCard.appendChild(modelName);
-            carCard.appendChild(carImage);
-            carCard.appendChild(specsContainer);
-            carsContainer.appendChild(carCard);
-        });
+            if (selectedPropellants.length > 0) {
+                // Apply the selected types filter to both queries
+                electricQuery.in('Drivlinje', selectedPropellants);
+                fossilQuery.in('Drivlinje', selectedPropellants);
+            }
 
-        resultsContainer.appendChild(typeHeader);
-        resultsContainer.appendChild(carsContainer);
+            // Filter electric cars based on the range criteria
+            if (selectedPropellants.includes('Electric') && selectedRange !== null) {
+                electricQuery.gte('Raekkevidde', selectedRange);
+            }
 
-        // Initialize the Slick Carousel after rendering the cars
-        let slidesToShow = 3; // Default value for showing 3 slides
+            // Filter fossil-driven cars based on the consumption criteria
+            if (selectedConsumption !== null && selectedPropellants.some(propellant => ['Benzin', 'Hybrid', 'Diesel'].includes(propellant))) {
+                fossilQuery.gte(`"Forbrug ((kWh) / 100km)/(km/l))"`, selectedConsumption);
+            }
 
-        if (carsByType[type].length < 3) {
-            slidesToShow = carsByType[type].length; // Set it to the number of items
+            // Log the electricQuery parameters
+            console.log('Electric Query:', electricQuery);
+
+            // Log the fossilQuery parameters
+            console.log('Fossil Query:', fossilQuery);
+
+            // Execute both queries concurrently
+            const [electricData, fossilData] = await Promise.all([
+                electricQuery,
+                fossilQuery,
+            ]);
+
+            if (electricData.error || fossilData.error) {
+                console.error('Error fetching data:', electricData.error || fossilData.error);
+            } else {
+                // Combine the results of electric and fossil-driven cars
+                const data = [...electricData.data, ...fossilData.data];
+
+                // Display the filtered data on the page
+                    // Group cars by type
+                const carsByType = {};
+                data.forEach((car) => {
+                    const type = car['Type'];
+
+                    if (!carsByType[type]) {
+                        carsByType[type] = [];
+                    }
+
+                    carsByType[type].push(car);
+                });
+
+                // Display the cars grouped by type
+                for (const type in carsByType) {
+                    const typeHeader = document.createElement('div');
+                    typeHeader.className = 'type-header';
+
+                    const typeHeaderH2 = document.createElement('h2');
+                    typeHeaderH2.textContent = type;
+                    typeHeader.appendChild(typeHeaderH2);
+
+                    const carsContainer = document.createElement('div');
+                    carsContainer.className = 'car-carousel';
+
+                    carsByType[type].forEach((car) => {
+                        const carCard = document.createElement('div');
+                        carCard.className = 'card';
+                        // Add a click event listener to each car card
+
+                        // Variables to track mouse coordinates
+                        let startX = 0;
+                        let startY = 0;
+                        let startTime = 0;
+
+                        // Threshold in milliseconds for a valid click
+                        const clickThreshold = 300; // Adjust as needed
+
+                        // Add a mousedown event listener to the car card
+                        carCard.addEventListener('mousedown', (event) => {
+                            // Record the mouse coordinates and time on mousedown
+                            startX = event.clientX;
+                            startY = event.clientY;
+                            startTime = Date.now();
+                        });
+
+                        // Add a mouseup event listener to handle the click action on mouseup
+                        carCard.addEventListener('mouseup', (event) => {
+                            // Check if it's a left-click (event.button === 0) and not a right-click (event.button === 2)
+                            if (event.button === 0) {
+                                // Calculate the distance between the start and end positions
+                                const dx = event.clientX - startX;
+                                const dy = event.clientY - startY;
+
+                                // Calculate the time taken for the click
+                                const clickTime = Date.now() - startTime;
+
+                                // If the distance is greater than a threshold (e.g., 10) or the time is over the threshold, treat it as a drag
+                                if (Math.abs(dx) > 10 || Math.abs(dy) > 10 || clickTime >= clickThreshold) {
+                                    // It's a drag, not a click
+                                } else {
+                                    // Handle the click action
+                                    window.location.href = `car-details.html?carId=${car['ID']}`;
+                                }
+                            }
+                        });
+
+
+                        const modelName = document.createElement('div');
+                        modelName.className = 'model-name';
+                        modelName.textContent = car['Model name'];
+
+                        const carImage = document.createElement('img');
+                        carImage.className = 'car-image';
+                        carImage.src = car['Image URL'];
+
+                        // Specifications
+                        const specsContainer = document.createElement('div');
+                        specsContainer.className = 'car-specs'; // Apply the same styling as car-image
+
+                        // Create and insert the specifications as div elements
+                        const createSpec = (label, value) => {
+                            const spec = document.createElement('div');
+                            spec.className = 'spec';
+
+                            const specLabel = document.createElement('span');
+                            specLabel.className = 'spec-label';
+                            specLabel.textContent = label;
+
+                            const specValue = document.createElement('span');
+                            specValue.className = 'spec-value';
+                            specValue.textContent = value;
+
+                            spec.appendChild(specLabel);
+                            spec.appendChild(specValue);
+
+                            return spec;
+                        };
+                        // Format the price with a thousand separator
+                        const formattedPrice = car['Pris'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                        const formattedCo2Price = car['Halvaarlig CO2-ejerafgift'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                        
+
+                        // Check if the car's driveline is "Electric" before adding the specifications
+                        if (car['Drivlinje'] === 'Electric') {
+                            specsContainer.appendChild(createSpec('Drive', `${car['Drivlinje']}`));
+                            specsContainer.appendChild(createSpec('Price', `${formattedPrice} kr.`));
+                            
+                            specsContainer.appendChild(createSpec('Range', `${car['Raekkevidde']} km`));
+                            specsContainer.appendChild(createSpec('Battery', car['Batterikapacitet (Netto/Brutto)'].split("/").pop([1])));
+                        }   else {
+                            specsContainer.appendChild(createSpec('Drive', `${car['Drivlinje']}`));
+                            specsContainer.appendChild(createSpec('Price', `${formattedPrice} kr.`));
+                            specsContainer.appendChild(createSpec('Green Tax', `${formattedCo2Price} kr.`)); // Display "N/A" for range
+                            specsContainer.appendChild(createSpec('Consumption', `${car['Forbrug ((kWh) / 100km)/(km/l))']} km/l`));
+                        }
+                        // Add more specifications here
+
+                        carCard.appendChild(modelName);
+                        carCard.appendChild(carImage);
+                        carCard.appendChild(specsContainer);
+                        carsContainer.appendChild(carCard);
+                    });
+
+                    resultsContainer.appendChild(typeHeader);
+                    resultsContainer.appendChild(carsContainer);
+
+                    // Initialize the Slick Carousel after rendering the cars
+                    let slidesToShow = 3; // Default value for showing 3 slides
+
+                    if (carsByType[type].length < 3) {
+                        slidesToShow = carsByType[type].length; // Set it to the number of items
+                    }
+
+                    $(carsContainer).slick({
+                        slidesToShow: slidesToShow,
+                        slidesToScroll: 3,
+                        responsive: [
+                            {
+                                breakpoint: 1024, // Breakpoint for tablets
+                                settings: {
+                                    slidesToShow: 2, // Set it to 2 to show 2 slides on tablets
+                                    slidesToScroll: 2, // You can also set this to 2 if you want to scroll 2 slides at a time
+                                },
+                            },
+                            {
+                                breakpoint: 768, // Breakpoint for mobile (existing configuration)
+                                settings: {
+                                    slidesToShow: 1,
+                                    slidesToScroll: 1,
+                                },
+                            },
+                        ],
+                    });
+                }
+            }
         }
-
-        $(carsContainer).slick({
-            slidesToShow: slidesToShow,
-            slidesToScroll: 3,
-            responsive: [
-                {
-                    breakpoint: 1024, // Breakpoint for tablets
-                    settings: {
-                        slidesToShow: 2, // Set it to 2 to show 2 slides on tablets
-                        slidesToScroll: 2, // You can also set this to 2 if you want to scroll 2 slides at a time
-                    },
-                },
-                {
-                    breakpoint: 768, // Breakpoint for mobile (existing configuration)
-                    settings: {
-                        slidesToShow: 1,
-                        slidesToScroll: 1,
-                    },
-                },
-            ],
-        });
-    }
-}
-    
-// Call the function to fetch and display cars
-fetchAndGroupCarsByType();
-    </script>     
-    <div id="initialModal" class="modal">
-        <div class="modal-content">
-            <span class="close" id="closeModal">&times;</span>
-            <h1>Welcome to Ny vogn</h1>
-            <p>Ny Vogn is a car recomandation site specializing in assisting you with finding your new perfect car.</p>
-            <p>For us to help you choose the perfect car for you, we would love to ask you a few questions about you and your needs.</p>
-            <div class="box">
-                <div class="box-content">
-                    <h3>Lets do it!</h3>
-                    <p>Perfect, let's get right to it!<br>Remember you can always change it later</p>
-                    <button id="answerNowButton">Answer Now</button>
-                </div>
-            </div>
-            <div class="box">
-                <div class="box-content">
-                    <h3>Not ready?</h3>
-                    <p>No problem.<br>You can always return to this later, by creating an account.</p>
-                    <button class="close-button">Skip For Now</button>
-                </div>
-            </div>
-        </div>
-    </div> 
-
-    <form id="multiStepForm">
-        <div id="step1" class="modal">
-            <div class="modal-content">
-                <span class="close" id="closeStep1">&times;</span>
-                <!-- Content for the new page goes here -->
-                <h1>Which Model?</h1>
-                <p>Please select one or more, of the car models below, that you prefer. If you do not have a preference please skip this question.</p>
-                
-                <div class="image-options">
-                    <div class="image-row">
-                        <input type="checkbox" id="myCheckbox1" class="hidden-checkbox" name="Type" value="Mini" />
-                        <label for="myCheckbox1" class="image-checkbox-label">
-                            <img class="grayed" src="/NyVogn/png/Mikro.png"/>
-                        </label>
-                        
-                        <input type="checkbox" id="myCheckbox2" class="hidden-checkbox" name="Type" value="Stationcar" />
-                        <label for="myCheckbox2" class="image-checkbox-label">
-                            <img class="grayed" src="/NyVogn/png/Stationcar.png" />
-                        </label>
-                        
-                        <input type="checkbox" id="myCheckbox3" class="hidden-checkbox" name="Type" value="SUV" />
-                        <label for="myCheckbox3" class="image-checkbox-label">
-                            <img class="grayed" src="/NyVogn/png/SUV.png" />
-                        </label>
-                        
-                        <input type="checkbox" id="myCheckbox4" class="hidden-checkbox" name="Type" value="Sedan" />
-                        <label for="myCheckbox4" class="image-checkbox-label">
-                            <img class="grayed" src="/NyVogn/png/Sedan.png" />
-                        </label>
-                    </div>
-                    <div class="image-row">
-                        <input type="checkbox" id="myCheckbox5" class="hidden-checkbox" name="Type" value="Coupe" />
-                        <label for="myCheckbox5" class="image-checkbox-label">
-                            <img class="grayed" src="/NyVogn/png/Coupe.png" />
-                        </label>
-                        
-                        <input type="checkbox" id="myCheckbox6" class="hidden-checkbox" name="Type" value="Cabriolet" />
-                        <label for="myCheckbox6" class="image-checkbox-label">
-                            <img class="grayed" src="/NyVogn/png/Cabriolet.png" />
-                        </label>
-                        
-                        <input type="checkbox" id="myCheckbox7" class="hidden-checkbox" name="Type" value="Hatchback" />
-                        <label for="myCheckbox7" class="image-checkbox-label">
-                            <img class="grayed" src="/NyVogn/png/Hatchback.png" />
-                        </label>
-                        
-                        <input type="checkbox" id="myCheckbox8" class="hidden-checkbox" name="Type" value="MPV" />
-                        <label for="myCheckbox8" class="image-checkbox-label">
-                            <img class="grayed" src="/NyVogn/png/MPV.png" />
-                        </label>
-                    </div>
-                </div>
-            
-                <!-- Status bar with 4 steps -->
-                <div class="status-bar">
-                    <div class="step-box">
-                        <div class="step active"></div>
-                        <div class="step"></div>
-                        <div class="step"></div>
-                        <div class="step"></div>
-                    </div>
-                    <div class="step-buttons">
-                        <!-- Previous and Next buttons -->
-                        <button id="nextButton1">Next</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="step2" class="modal">
-            <div class="modal-content">
-                <span class="close" id="closeStep2">&times;</span>
-                <!-- Content for the new page goes here -->
-                <h1>Consumption</h1>
-                <p>Please select your preferred propellant, and your consumption requirements</p>
-                
-                <!-- Gas -->
-                <label>
-                    <input type="checkbox" id="gasCheckbox" name="propellant" value="Gas" />
-                    Gas
-                </label>
-
-                <!-- Diesel -->
-                <label>
-                    <input type="checkbox" id="dieselCheckbox" name="propellant" value="Diesel" />
-                    Diesel
-                </label>
-
-                <!-- Hybrid -->
-                <label>
-                    <input type="checkbox" id="hybridCheckbox" name="propellant" value="Hybrid" />
-                    Hybrid
-                </label>
-
-                <!-- Electric -->
-                <label>
-                    <input type="checkbox" id="electricCheckbox" name="propellant" value="Electric" />
-                    Electric
-                </label>
-
-                <!-- Status bar with 4 steps -->
-                <div class="status-bar">
-                    <div class="step-box">
-                        <div class="step active"></div>
-                        <div class="step active"></div>
-                        <div class="step"></div>
-                        <div class="step"></div>
-                    </div>
-                    <div class="step-buttons">
-                        <!-- Previous and Next buttons -->
-                        <button id="previousButton2">Previous</button>
-                        <button id="nextButton2">Next</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="step3" class="modal">
-            <div class="modal-content">
-                <span class="close" id="closeStep3">&times;</span>
-                <!-- Content for the new page goes here -->
-                <h1>Which Model do you want?</h1>
-                <p>Please select one or more, of the car models below, that you prefer. If you do not have a preference please skip this question.</p>
-        
-                <!-- Status bar with 4 steps -->
-                <div class="status-bar">
-                    <div class="step-box">
-                        <div class="step active"></div>
-                        <div class="step active"></div>
-                        <div class="step active"></div>
-                        <div class="step"></div>
-                    </div>
-                    <div class="step-buttons">
-                        <!-- Previous and Next buttons -->
-                        <button id="previousButton3">Previous</button>
-                        <button id="nextButton3">Next</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="step4" class="modal">
-            <div class="modal-content">
-                <span class="close" id="closeStep4">&times;</span>
-                <!-- Content for the new page goes here -->
-                <h1>Which Model do you want?</h1>
-                <p>Please select one or more, of the car models below, that you prefer. If you do not have a preference please skip this question.</p>
-        
-                <!-- Status bar with 4 steps -->
-                <div class="status-bar">
-                    <div class="step-box">
-                        <div class="step active"></div>
-                        <div class="step active"></div>
-                        <div class="step active"></div>
-                        <div class="step active"></div>
-                    </div>
-                    <div class="step-buttons">
-                        <!-- Previous and Next buttons -->
-                        <button id="previousButton4">Previous</button>
-                        <button type="submit" id="submitButton">Submit</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-
-    <script src="/NyVogn/pop-up.js"></script>
-    <div id="filtered-results2">
-    <!-- Filtered Data will be displayed here -->
-    </div>
-
+        // Call the function to fetch and display cars
+        fetchAndDisplayCars();
+    </script>
 </body>
 </html>
-
-
-
-
-
-
-<!-- const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indhd2xpcG9maGxpeWhmeWV4aWpoIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTcxMDMxMTUsImV4cCI6MjAxMjY3OTExNX0.yxQ1aLlYN7ia6ceBYoFR9jQmMn9rxHJXH9d8lYOzWm4';
 
 
