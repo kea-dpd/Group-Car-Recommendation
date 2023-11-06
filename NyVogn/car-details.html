@@ -1,135 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Car Details</title>
-    <link rel="stylesheet" type="text/css" href="/NyVogn/css/car-details.css"> <!-- Link to the CSS file -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"> <!-- Leaflet CSS -->
-
-</head>
-<body>
+    <link rel="stylesheet" type="text/css" href="/NyVogn/css/car-details.css" />
+    <!-- Link to the CSS file -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="/NyVogn/css/burgermenu.css" />
+  </head>
+  <body>
+    <header class="flex">
+      <figure class="logo">
+        <a href="Catalog.html"><img src="/NyVogn/svg/placeholder-logo.svg" alt="Nyvogn" /></a>
+      </figure>
+      <nav id="main_menu" class="flex">
+        <button class="toggle_button">
+          <img class="open_menu menu_icon" src="/NyVogn/svg/Hamburger_3.svg" alt="menu icon" />
+          <img class="close_menu menu_icon hide" src="/NyVogn/svg/Close_round.svg" alt="Close icon" />
+        </button>
+        <div id="flex_menu" class="menu hide">
+          <ul>
+            <li class="center-vertical"><a class="nav-item" href="/NyVogn/Catalog.html">Catalog</a></li>
+            <li class="center-vertical"><a class="nav-item" href="">Recommendation</a></li>
+            <li class="center-vertical"><a class="nav-item" href="">Compare</a></li>
+            <li class="center-vertical"><a class="nav-item" href="/NyVogn/support.html">Support</a></li>
+          </ul>
+          <div class="center-vertical nav_btn menu">
+            <button class="variation_btn">Register</button>
+            <button class="standart_btn">Login</button>
+          </div>
+        </div>
+      </nav>
+    </header>
     <h1>Car Details</h1>
 
     <div id="car-details">
-        <!-- Car details will be displayed here -->
+      <!-- Car details will be displayed here -->
     </div>
 
-    <h2>Car Dealers</h2>
-    <button id="find-area-near-me">Find Nearest Dealer</button>
+    <div class="carDealers_flex">
+      <h2>Car Dealers</h2>
+      <div>
+        <p>Enable GPS to find dealers near you</p>
+        <button id="find-area-near-me" class="standart_btn">Enable GPS Now</button>
+      </div>
+    </div>
     <div id="map"></div>
 
-
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script> <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="/NyVogn/burgermenu.js"></script>
+    <!-- Leaflet JavaScript -->
     <script>
-        // Supabase configuration
-        const supabaseUrl = 'https://wawlipofhliyhfyexijh.supabase.co';
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indhd2xpcG9maGxpeWhmeWV4aWpoIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTcxMDMxMTUsImV4cCI6MjAxMjY3OTExNX0.yxQ1aLlYN7ia6ceBYoFR9jQmMn9rxHJXH9d8lYOzWm4';
+      // Supabase configuration
+      const supabaseUrl = "https://wawlipofhliyhfyexijh.supabase.co";
+      const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indhd2xpcG9maGxpeWhmeWV4aWpoIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTcxMDMxMTUsImV4cCI6MjAxMjY3OTExNX0.yxQ1aLlYN7ia6ceBYoFR9jQmMn9rxHJXH9d8lYOzWm4";
 
-        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+      const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-        // Function to get URL parameters by name
-        function getUrlParameter(name) {
-            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-            const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-            const results = regex.exec(location.search);
-            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+      // Function to get URL parameters by name
+      function getUrlParameter(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        const regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+        const results = regex.exec(location.search);
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+      }
+
+      // Extract the carId from the URL
+      const carId = getUrlParameter("carId");
+
+      // Fetch and display car details
+      async function fetchCarDetails(carId) {
+        const { data, error } = await supabase.from("NyVogn").select("*").eq("ID", carId);
+
+        if (error) {
+          console.error("Error fetching car details:", error);
+          return;
         }
 
-        // Extract the carId from the URL
-        const carId = getUrlParameter('carId');
+        const carDetailsContainer = document.getElementById("car-details");
+        const car = data[0];
 
-        // Fetch and display car details
-        async function fetchCarDetails(carId) {
-            const { data, error } = await supabase
-                .from('NyVogn')
-                .select('*')
-                .eq('ID', carId);
+        if (car) {
+          // Create an image element for the car
+          const carImage = document.createElement("img");
+          carImage.src = car["Image URL"];
+          carImage.alt = car["Model name"];
+          carDetailsContainer.appendChild(carImage);
 
-            if (error) {
-                console.error('Error fetching car details:', error);
-                return;
-            }
+          // Create a container for the specifications
+          const specsContainer = document.createElement("div");
+          specsContainer.className = "car-specs";
 
-            const carDetailsContainer = document.getElementById('car-details');
-            const car = data[0];
+          // Add specifications as paragraphs
+          Object.keys(car).forEach((key) => {
+            const spec = document.createElement("p");
+            spec.innerHTML = `<strong>${key}:</strong> ${car[key]}`;
+            specsContainer.appendChild(spec);
+          });
 
-            if (car) {
-                // Create an image element for the car
-                const carImage = document.createElement('img');
-                carImage.src = car['Image URL'];
-                carImage.alt = car['Model name'];
-                carDetailsContainer.appendChild(carImage);
-
-                // Create a container for the specifications
-                const specsContainer = document.createElement('div');
-                specsContainer.className = 'car-specs';
-
-                // Add specifications as paragraphs
-                Object.keys(car).forEach((key) => {
-                    const spec = document.createElement('p');
-                    spec.innerHTML = `<strong>${key}:</strong> ${car[key]}`;
-                    specsContainer.appendChild(spec);
-                });
-
-                // Append the specifications container to the main container
-                carDetailsContainer.appendChild(specsContainer);
-            } else {
-                carDetailsContainer.textContent = 'Car not found';
-            }
+          // Append the specifications container to the main container
+          carDetailsContainer.appendChild(specsContainer);
+        } else {
+          carDetailsContainer.textContent = "Car not found";
         }
+      }
 
-        // Create a map centered on Denmark
-        const map = L.map('map').setView([56.0639, 9.8018], 7); // Centered on Denmark
+      // Create a map centered on Denmark
+      const map = L.map("map").setView([56.0639, 9.8018], 7); // Centered on Denmark
 
+      L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
+        attribution: '&copy; <a href="https://carto.com/attributions">CARTO</a>',
+      }).addTo(map);
 
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-            attribution: '&copy; <a href="https://carto.com/attributions">CARTO</a>'
-        }).addTo(map);
+      // Array to store dealer markers
+      const dealerMarkers = [];
 
-        // Array to store dealer markers
-        const dealerMarkers = [];
-
-        // Use Supabase client to get dealer data
-        supabase
-            .from('dealers')
-            .select('*, Latitude, Longitude')
-            .then(({ data: dealers, error }) => {
-                if (error) {
-                    console.error('Error fetching dealers data:', error);
-                } else {
-                    // Loop through the dealers' data and add markers for each dealer
-                    dealers.forEach((dealer, index) => {
-                        const marker = L.marker([parseFloat(dealer.Latitude), parseFloat(dealer.Longitude)]);
-                        marker.bindPopup(`<strong>${dealer.Name}</strong><br>${dealer.Address}<br><a href="${dealer.Website}" target="_blank">Website</a>`);
-                        dealerMarkers.push(marker);
-                        marker.addTo(map);
-                    });
-                }
+      // Use Supabase client to get dealer data
+      supabase
+        .from("dealers")
+        .select("*, Latitude, Longitude")
+        .then(({ data: dealers, error }) => {
+          if (error) {
+            console.error("Error fetching dealers data:", error);
+          } else {
+            // Loop through the dealers' data and add markers for each dealer
+            dealers.forEach((dealer, index) => {
+              const marker = L.marker([parseFloat(dealer.Latitude), parseFloat(dealer.Longitude)]);
+              marker.bindPopup(`<strong>${dealer.Name}</strong><br>${dealer.Address}<br><a href="${dealer.Website}" target="_blank">Website</a>`);
+              dealerMarkers.push(marker);
+              marker.addTo(map);
             });
+          }
+        });
 
-          // Function to zoom to the area within 100km radius of the user's location
-          function zoomToAreaNearUser() {
-            if ('geolocation' in navigator) {
-                navigator.geolocation.getCurrentPosition((position) => {
-                    const userLocation = L.latLng(position.coords.latitude, position.coords.longitude);
+      // Function to zoom to the area within 100km radius of the user's location
+      function zoomToAreaNearUser() {
+        if ("geolocation" in navigator) {
+          navigator.geolocation.getCurrentPosition((position) => {
+            const userLocation = L.latLng(position.coords.latitude, position.coords.longitude);
 
-                    const areaBounds = userLocation.toBounds(60000); // 100km in meters
-                    map.fitBounds(areaBounds);
-                });
-            } else {
-                alert('Geolocation is not supported by your browser.');
-            }
+            const areaBounds = userLocation.toBounds(60000); // 100km in meters
+            map.fitBounds(areaBounds);
+          });
+        } else {
+          alert("Geolocation is not supported by your browser.");
         }
+      }
 
-        // Attach a click event to the "Find Area Near Me" button
-        document.getElementById('find-area-near-me').addEventListener('click', zoomToAreaNearUser);
+      // Attach a click event to the "Find Area Near Me" button
+      document.getElementById("find-area-near-me").addEventListener("click", zoomToAreaNearUser);
 
-        // Call the function to fetch and display car details
-        fetchCarDetails(carId);
+      // Call the function to fetch and display car details
+      fetchCarDetails(carId);
     </script>
-</body>
+  </body>
 </html>
-
-
