@@ -111,6 +111,14 @@ header {
   top: 0;
   background-color: var(--seethrough-color);
   z-index: 2;
+  display: flex;
+  align-items: center;
+}
+#flex_menu ul {
+  list-style: none;
+}
+#flex_menu ul {
+  list-style: none;
 }
 
 /*   computer   */

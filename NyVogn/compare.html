@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NyVogn</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+    <link rel="stylesheet" type="text/css" href="/NyVogn/css/compare.css" />
+    <!-- Link to the CSS file -->
+    <link rel="stylesheet" href="/NyVogn/css/burgermenu.css" />
+  </head>
+  <body>
+    <header class="flex">
+      <figure class="logo">
+        <a href="Catalog.html"><img src="/NyVogn/svg/placeholder-logo.svg" alt="Nyvogn" /></a>
+      </figure>
+      <nav id="main_menu" class="flex">
+        <button class="toggle_button">
+          <img class="open_menu menu_icon" src="/NyVogn/svg/Hamburger_3.svg" alt="menu icon" />
+          <img class="close_menu menu_icon hide" src="/NyVogn/svg/Close_round.svg" alt="Close icon" />
+        </button>
+        <div id="flex_menu" class="menu hide">
+          <ul>
+            <li class="center-vertical"><a class="nav-item" href="/NyVogn/Catalog.html">Catalog</a></li>
+            <li class="center-vertical"><a class="nav-item" href="">Recommendation</a></li>
+            <li class="center-vertical"><a class="nav-item" href="/NyVogn/compare.html">Compare</a></li>
+            <li class="center-vertical"><a class="nav-item" href="/NyVogn/support.html">Support</a></li>
+          </ul>
+          <div class="center-vertical nav_btn menu">
+            <button class="variation_btn">Register</button>
+            <button class="standart_btn">Login</button>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <h1>Compare</h1>
+      <div class="picked"></div>
+      <template id="car" class="car_selected">
+        <h2 class="car_name">Lorem ipsum</h2>
+        <img class="car_pic" src="" alt="car" />
+        <p class="price">Price</p>
+        <div class="car_des">
+          <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Inventore at doloribus dolore.</p>
+        </div>
+        <div class="specs_list">
+          <p>Specs <span>| Equipment</span></p>
+          <!-- <p>Inkl. Standart</p>
+          <p>Add-on</p> -->
+          <div>
+            <p class="specs">lorem</p>
+          </div>
+        </div>
+      </template>
+      <section class="choose">
+        <h2>Choose a car</h2>
+        <p>You can search for a car here, or pick a car from your saved list on your profile.</p>
+        <div class="flex_form">
+          <form>
+            <!-- <p>Find car model</p> -->
+            <label>
+              <select name="pick_model" id="pick_model">
+                <option class="gray" value="pick">Choose car</option>
+                <option value="A1 Sportback">Audi - A1 Sportback</option>
+                <option value="A1 Sportback Advanced">Audi - A1 Sportback Advanced</option>
+                <option value="Q8 e-tron Prestige">Audi - Q8 e-tron Prestige</option>
+              </select>
+            </label>
+          </form>
+          <button class="standart_btn"><a href="#">Login</a></button>
+        </div>
+      </section>
+      <section class="choose">
+        <h2>Choose a car</h2>
+        <p>You can search for a car here, or pick a car from your saved list on your profile.</p>
+        <div class="flex_form">
+          <form>
+            <!-- <p>Find car model</p> -->
+            <label>
+              <select name="pick_model" id="pick_model">
+                <option class="gray" value="pick">Choose car</option>
+                <option value="A1 Sportback">Audi - A1 Sportback</option>
+                <option value="A1 Sportback Advanced">Audi - A1 Sportback Advanced</option>
+                <option value="Q8 e-tron Prestige">Audi - Q8 e-tron Prestige</option>
+              </select>
+            </label>
+          </form>
+          <button class="standart_btn"><a href="#">Login</a></button>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
+
+<script src="/NyVogn/compare.js"></script>
