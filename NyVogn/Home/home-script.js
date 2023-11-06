@@ -16,21 +16,23 @@ budgetInput.addEventListener('input', (e) => {
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const type = form.type.value;
-    const drivlinje = form.drivlinje.value;
-    const budget = parseInt(form.budget.value);
+    const typeOptions = form.elements['type'];
+    const selectedTypes = Array.from(typeOptions).filter(option => option.selected).map(option => option.value);
+    const drivlinje = form.elements['drivlinje'].value;
+    const budget = parseInt(form.elements['budget'].value);
 
     const query = supabase.from('NyVogn').select('*');
 
-    if (type) {
-        query.eq('Type', type);
+    if (selectedTypes.length > 0) {
+        // Filter by selected types
+        query.in('Type', selectedTypes);
     }
 
     if (drivlinje) {
         query.eq('Drivlinje', drivlinje);
     }
 
-    query.lte('Pris', budget); // Use 'lte' to filter items with prices less than or equal to the budget.
+    query.lte('Pris', budget);
 
     const { data, error } = await query;
 
