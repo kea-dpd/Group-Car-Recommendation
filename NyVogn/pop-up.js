@@ -234,6 +234,24 @@ consumptionInputField.addEventListener('input', (e) => {
 });
 
 
+const budgetRangeInput = document.getElementById('budget-range');
+const budgetRangeValue = document.getElementById('budget-range-value');
+const budgetInputField = document.getElementById('budget-input');
+
+// Update the displayed budget value as the slider is adjusted
+budgetRangeInput.addEventListener('input', (e) => {
+    const value = e.target.value;
+    budgetRangeValue.textContent = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    budgetInputField.value = value;
+});
+
+budgetInputField.addEventListener('input', (e) => {
+    const value = e.target.value;
+    budgetRangeValue.textContent = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    budgetRangeInput.value = value;
+});
+
+
 
 $( ".grayed" ).click(function() {
     $(this).toggleClass('active');
@@ -249,9 +267,10 @@ form.addEventListener('submit', async (e) => {
     const selectedPropellants = Array.from(document.querySelectorAll('input[name="propellant"]:checked')).map((checkbox) => checkbox.value);
     const rangeValue = document.getElementById('range-input').value; // Get range value
     const consumptionValue = document.getElementById('consumption-input').value; // Get consumption value
+    const budgetValue = document.getElementById('budget-input').value;
 
     // Check if either selectedTypes, selectedPropellants, rangeValue, or consumptionValue have values
-    if (selectedTypes.length > 0 || selectedPropellants.length > 0 || rangeValue || consumptionValue) {
+    if (selectedTypes.length > 0 || selectedPropellants.length > 0 || rangeValue || consumptionValue || budgetValue) {
         const queryParams = [];
 
         if (selectedTypes.length > 0) {
@@ -268,6 +287,10 @@ form.addEventListener('submit', async (e) => {
 
         if (consumptionValue) {
             queryParams.push(`consumption=${consumptionValue}`);
+        }
+
+        if (budgetValue) {
+            queryParams.push(`budget=${budgetValue}`);
         }
 
         const queryString = queryParams.join('&');

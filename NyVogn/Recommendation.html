@@ -60,6 +60,7 @@
             const selectedPropellantsParam = urlParams.get('propellant');
             const selectedRange = urlParams.get('range');
             const selectedConsumption = urlParams.get('consumption');
+            const selectedBudget = urlParams.get('budget');
 
             // Check if selectedTypesParam and selectedPropellantsParam are not null
             const selectedTypes = selectedTypesParam ? selectedTypesParam.split(',') : [];
@@ -79,6 +80,12 @@
                 // Apply the selected types filter to both queries
                 electricQuery.in('Drivlinje', selectedPropellants);
                 fossilQuery.in('Drivlinje', selectedPropellants);
+            }
+
+            if (selectedBudget.length > 0) {
+                // Apply the selected types filter to both queries
+                electricQuery.lte('Pris', selectedBudget);
+                fossilQuery.lte('Pris', selectedBudget);
             }
 
             // Filter electric cars based on the range criteria

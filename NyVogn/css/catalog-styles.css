@@ -371,42 +371,47 @@ input[type="checkbox"]:checked + .custom-checkbox {
   align-items: center;
 }
 
-.range-container {
-  text-align: left;
-}
-
 .range-container #range-input, 
-.consumption-container #consumption-input {
+.consumption-container #consumption-input,
+.budget-container #budget-input {
   background-color: var(--accent-color);
 }
 
-.range-container label, input{
+.budget-container label input,
+.consumption-container label input,
+.range-container label input{
   display: inline-flex;
   vertical-align: middle;
 }
 
-.consumption-container label, input{
-  display: inline-flex;
-  vertical-align: middle;
-}
-
-.consumption-container {
+.consumption-container,
+.range-container,
+.budget-container {
   text-align: left;
 }
 
 #range-value,
-#consumption-range-value {
+#consumption-range-value,
+#budget-range-value {
   display: none;
 }
 
 #range-input,
-#consumption-input {
+#consumption-input,
+#budget-input {
   background-color: var(--lighter-black);
   border: none;
   text-align: center;
   color: white;
   font-weight: bold;
   border-radius: 5px;
+  letter-spacing: 1px;
+}
+
+#range-input::first-letter,
+#consumption-input::first-letter,
+#budget-input::first-letter {
+  margin-right: 20px; /* Adjust the value as needed for more space */
 }
 
 /* CSS for mobile-friendly layout */
