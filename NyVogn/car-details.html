@@ -108,13 +108,15 @@
         }
       }
 
-      // Function to initialize the map and add dealer markers
+      // Declare the map variable in a broader scope
+      let map;
+
       // Function to initialize the map and add dealer markers
       function initializeMap() {
         // Create a delay of 1000 milliseconds (1 second)
         setTimeout(function () {
           // Create a map centered on Denmark
-          const map = L.map("map").setView([56.0639, 9.8018], 7); // Centered on Denmark
+          map = L.map("map").setView([56.0639, 9.8018], 7); // Centered on Denmark
 
           L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
             attribution: '&copy; <a href="https://carto.com/attributions">CARTO</a>',
@@ -156,7 +158,6 @@
         }, 1000); // Delay for 1000 milliseconds (1 second)
       }
 
-
       // Function to zoom to the area within 100km radius of the user's location
       function zoomToAreaNearUser() {
         if ("geolocation" in navigator) {
@@ -164,12 +165,13 @@
             const userLocation = L.latLng(position.coords.latitude, position.coords.longitude);
 
             const areaBounds = userLocation.toBounds(60000); // 100km in meters
-            map.fitBounds(areaBounds);
+            map.fitBounds(areaBounds); // Access the map variable declared in the broader scope
           });
         } else {
           alert("Geolocation is not supported by your browser.");
         }
       }
+
 
       // Attach a click event to the "Find Area Near Me" button
       document.getElementById("find-area-near-me").addEventListener("click", zoomToAreaNearUser);
