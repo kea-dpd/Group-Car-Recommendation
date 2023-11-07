@@ -108,8 +108,15 @@
         }
       }
 
-      // Declare the map variable in a broader scope
-      let map;
+      // Function to generate the test drive link based on the car's brand
+      function getTestDriveLink(brand) {
+        if (brand === "Audi") {
+          return "https://ww2.audi.dk/book-audi-provetur/";
+        } else if (brand === "Skoda") {
+          return "https://ww3.skoda.dk/book-provetur/";
+        }
+        // Add more brands and links as needed
+      }
 
       // Function to initialize the map and add dealer markers
       function initializeMap() {
@@ -133,22 +140,23 @@
               if (error) {
                 console.error("Error fetching dealers data:", error);
               } else {
-                // Determine the car's brand based on the image URL
-                const carImageUrl = document.querySelector("#car-details img").src;
-                console.log(carImageUrl);
-                let carBrand = "Unknown";
-
-                if (carImageUrl.includes("audi")) {
-                  carBrand = "Audi";
-                } else if (carImageUrl.includes("skoda")) {
-                  carBrand = "Skoda";
-                }
-
-                // Loop through the dealers' data and add markers for dealers of the car's brand
+                // Loop through the dealers' data and add markers for dealers
                 dealers.forEach((dealer, index) => {
+                  const carImageUrl = document.querySelector("#car-details img").src;
+                  console.log(carImageUrl);
+                  let carBrand = "Unknown";
+
+                  // Identify the brand based on the car's image URL
+                  if (carImageUrl.includes("audi")) {
+                    carBrand = "Audi";
+                  } else if (carImageUrl.includes("skoda")) {
+                    carBrand = "Skoda";
+                  }
+
                   if (dealer.Brand === carBrand) {
                     const marker = L.marker([parseFloat(dealer.Latitude), parseFloat(dealer.Longitude)]);
-                    marker.bindPopup(`<strong>${dealer.Name}</strong><br>${dealer.Address}<br><a href="${dealer.Website}" target="_blank">Website</a>`);
+                    const testDriveLink = getTestDriveLink(carBrand); // Get the test drive link
+                    marker.bindPopup(`<strong>${dealer.Name}</strong><br>${dealer.Address}<br><a href="${dealer.Website}" target="_blank">Website</a><br><a href="${testDriveLink}" target="_blank">Book Test Drive</a>`);
                     dealerMarkers.push(marker);
                     marker.addTo(map);
                   }
