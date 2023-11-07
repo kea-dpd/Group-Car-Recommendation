@@ -130,3 +130,58 @@ form p {
 .gray {
   color: var(--gray);
 }
+
+@media (max-width: 924px) {
+  body {
+    margin: 20px;
+  }
+  .logo img {
+    margin-left: 0px;
+  }
+  header {
+    /* min-width: 305px; */
+    /* margin-left: -125%; */
+    margin: 0;
+    justify-content: space-between;
+  }
+  main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+  h1 {
+    margin: 0;
+    margin-bottom: -40px;
+    margin-top: 20px;
+  }
+  .choose h2 {
+    font-size: 1.5rem;
+    padding-top: 0;
+    margin-top: 0;
+  }
+  .choose {
+    margin-top: 0px;
+    width: fit-content;
+    height: fit-content;
+    padding: 40px 8px;
+  }
+  form {
+    width: fit-content;
+  }
+  .flex_form {
+    display: flex;
+    /* flex-direction: column; */
+    width: 85%;
+    align-items: center;
+  }
+  #pick_model {
+    padding: 10px 0;
+    padding-left: 10px;
+  }
+  .flex_form .standart_btn {
+    margin-top: 0px;
+    padding: 10px 5px;
+    font-size: 0.7rem;
+  }
+}
