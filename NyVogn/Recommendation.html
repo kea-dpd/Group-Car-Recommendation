@@ -112,7 +112,8 @@
 
             if (electricData.error || fossilData.error) {
                 console.error('Error fetching data:', electricData.error || fossilData.error);
-            } else {
+            } 
+            else {
                 // Combine the results of electric and fossil-driven cars
                 const data = [...electricData.data, ...fossilData.data];
 

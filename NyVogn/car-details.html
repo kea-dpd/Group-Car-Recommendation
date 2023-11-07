@@ -108,33 +108,54 @@
         }
       }
 
-      // Create a map centered on Denmark
-      const map = L.map("map").setView([56.0639, 9.8018], 7); // Centered on Denmark
+      // Function to initialize the map and add dealer markers
+      // Function to initialize the map and add dealer markers
+      function initializeMap() {
+        // Create a delay of 1000 milliseconds (1 second)
+        setTimeout(function () {
+          // Create a map centered on Denmark
+          const map = L.map("map").setView([56.0639, 9.8018], 7); // Centered on Denmark
 
-      L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
-        attribution: '&copy; <a href="https://carto.com/attributions">CARTO</a>',
-      }).addTo(map);
+          L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
+            attribution: '&copy; <a href="https://carto.com/attributions">CARTO</a>',
+          }).addTo(map);
 
-      // Array to store dealer markers
-      const dealerMarkers = [];
+          // Array to store dealer markers
+          const dealerMarkers = [];
 
-      // Use Supabase client to get dealer data
-      supabase
-        .from("dealers")
-        .select("*, Latitude, Longitude")
-        .then(({ data: dealers, error }) => {
-          if (error) {
-            console.error("Error fetching dealers data:", error);
-          } else {
-            // Loop through the dealers' data and add markers for each dealer
-            dealers.forEach((dealer, index) => {
-              const marker = L.marker([parseFloat(dealer.Latitude), parseFloat(dealer.Longitude)]);
-              marker.bindPopup(`<strong>${dealer.Name}</strong><br>${dealer.Address}<br><a href="${dealer.Website}" target="_blank">Website</a>`);
-              dealerMarkers.push(marker);
-              marker.addTo(map);
+          // Use Supabase client to get dealer data
+          supabase
+            .from("dealers")
+            .select("*, Latitude, Longitude")
+            .then(({ data: dealers, error }) => {
+              if (error) {
+                console.error("Error fetching dealers data:", error);
+              } else {
+                // Determine the car's brand based on the image URL
+                const carImageUrl = document.querySelector("#car-details img").src;
+                console.log(carImageUrl);
+                let carBrand = "Unknown";
+
+                if (carImageUrl.includes("audi")) {
+                  carBrand = "Audi";
+                } else if (carImageUrl.includes("skoda")) {
+                  carBrand = "Skoda";
+                }
+
+                // Loop through the dealers' data and add markers for dealers of the car's brand
+                dealers.forEach((dealer, index) => {
+                  if (dealer.Brand === carBrand) {
+                    const marker = L.marker([parseFloat(dealer.Latitude), parseFloat(dealer.Longitude)]);
+                    marker.bindPopup(`<strong>${dealer.Name}</strong><br>${dealer.Address}<br><a href="${dealer.Website}" target="_blank">Website</a>`);
+                    dealerMarkers.push(marker);
+                    marker.addTo(map);
+                  }
+                });
+              }
             });
-          }
-        });
+        }, 1000); // Delay for 1000 milliseconds (1 second)
+      }
+
 
       // Function to zoom to the area within 100km radius of the user's location
       function zoomToAreaNearUser() {
@@ -155,6 +176,7 @@
 
       // Call the function to fetch and display car details
       fetchCarDetails(carId);
+      initializeMap();
     </script>
   </body>
 </html>
