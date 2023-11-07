@@ -160,7 +160,6 @@ p {
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   z-index: 3;
-  
 }
 
 .modal-content {
@@ -178,7 +177,6 @@ p {
   justify-content: space-between;
   overflow-y: auto;
 }
-
 
 /* Style for individual boxes */
 .modal-content .box {
