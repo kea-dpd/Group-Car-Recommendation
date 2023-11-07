@@ -149,6 +149,37 @@ p {
     font-size: 14px;
   }
 }
+/* CSS for mobile-friendly layout */
+@media (max-width: 1024px) {
+  .car-carousel.slick-initialized.slick-slider {
+    width: 100%; /* Make the carousel full width on smaller screens */
+  }
+
+  body {
+    margin: 20px;
+  }
+
+  .spec-label {
+    padding: 5px;
+    font-size: 14px;
+  }
+
+  /* Styling for specification values */
+  .spec-value {
+    font-weight: bold;
+    padding: 5px;
+    font-size: 14px;
+  }
+  .car-carousel.slick-initialized.slick-slider button.slick-prev {
+    left: 25px; /* Position the button to the left edge of the container */
+  }
+
+  .car-carousel.slick-initialized.slick-slider button.slick-next {
+    right: 35px; /* Position the button to the left edge of the container */
+  }
+}
+
+/******pop-up******/
 
 /* Modal Styles */
 .modal {
@@ -168,7 +199,7 @@ p {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 50vw;/* Fixed width */
+  width: 50vw; /* Fixed width */
   height: 30vw; /* Fixed height */
   padding: 40px; /* Increase the padding to make it taller */
   text-align: center;
@@ -193,7 +224,6 @@ p {
 /* Style for individual boxes */
 .modal-content .box-content {
   padding: 20px;
-
 }
 
 /* Style for individual boxes */
@@ -209,7 +239,7 @@ p {
 
 /* Style for buttons */
 .modal-content button {
-  background-color: #0074D9;
+  background-color: #0074d9;
   color: #fff;
   border: none;
   padding: 25px 50px;
@@ -256,11 +286,11 @@ p {
 }
 
 .active {
-  background-color: #0074D9; /* Change this color as needed */
+  background-color: #0074d9; /* Change this color as needed */
 }
 
 .colored {
-  background-color: #0074D9; /* Change this color as needed */
+  background-color: #0074d9; /* Change this color as needed */
 }
 
 /* Style for the "Previous" button */
@@ -271,8 +301,8 @@ p {
   width: 100px; /* Fixed width */
   height: 30px; /* Fixed height */
   background-color: transparent; /* Transparent background */
-  border: 2px solid #0074D9; /* Blue border */
-  color: #0074D9; /* Blue text color */
+  border: 2px solid #0074d9; /* Blue border */
+  color: #0074d9; /* Blue text color */
   padding: 0; /* Remove padding to set a fixed size */
   margin-right: 5px; /* Add some spacing */
   cursor: pointer;
@@ -288,7 +318,7 @@ p {
 #submitButton {
   width: 100px; /* Fixed width */
   height: 30px; /* Fixed height */
-  background-color: #0074D9; /* Blue background */
+  background-color: #0074d9; /* Blue background */
   color: #fff; /* White text color */
   padding: 0; /* Remove padding to set a fixed size */
   cursor: pointer;
@@ -300,7 +330,7 @@ p {
 #submitButton {
   width: 100px; /* Fixed width */
   height: 30px; /* Fixed height */
-  background-color: #0074D9; /* Blue background */
+  background-color: #0074d9; /* Blue background */
   color: #fff; /* White text color */
   padding: 0; /* Remove padding to set a fixed size */
   cursor: pointer;
@@ -317,7 +347,7 @@ p {
   justify-content: space-around;
 }
 
-.image-row img{
+.image-row img {
   margin: 10px;
   max-width: 6vw;
 }
@@ -347,30 +377,30 @@ input[type="checkbox"] {
 /* Style the custom checkbox */
 .custom-checkbox {
   margin-right: 10px;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%; /* Makes it round */
-    display: inline-block;
-    cursor: pointer;
-    background-color: var(--lighter-black);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%; /* Makes it round */
+  display: inline-block;
+  cursor: pointer;
+  background-color: var(--lighter-black);
 }
 
 /* Style the custom checkbox when it's checked */
 input[type="checkbox"]:checked + .custom-checkbox {
-    background-color: var(--accent-color); /* Grey background when checked */
+  background-color: var(--accent-color); /* Grey background when checked */
 }
 
 .propellant-container {
   text-align: left !important;
 }
 
-.propellant-container label{
+.propellant-container label {
   width: 15%;
   display: inline-flex;
   align-items: center;
 }
 
-.range-container #range-input, 
+.range-container #range-input,
 .consumption-container #consumption-input,
 .budget-container #budget-input {
   background-color: var(--accent-color);
@@ -378,7 +408,7 @@ input[type="checkbox"]:checked + .custom-checkbox {
 
 .budget-container label input,
 .consumption-container label input,
-.range-container label input{
+.range-container label input {
   display: inline-flex;
   vertical-align: middle;
 }
@@ -415,30 +445,149 @@ input[type="checkbox"]:checked + .custom-checkbox {
 
 /* CSS for mobile-friendly layout */
 @media (max-width: 1024px) {
-  .car-carousel.slick-initialized.slick-slider {
-    width: 100%; /* Make the carousel full width on smaller screens */
+  .modal-content {
+    height: 83%;
+    width: 75%;
+    padding: 20px;
+  }
+  .modal-content h1 {
+    font-size: 1.5rem;
+    width: 100%;
+  }
+  .modal-content p {
+    font-size: 0.9rem;
+    line-height: 1.3rem;
+    padding: 0;
+  }
+  .modal-content .box {
+    width: 78%;
+    margin: 5px auto;
+    padding: 10px;
+  }
+  .modal-content .box p {
+    font-size: 0.8rem;
+    line-height: 1.1rem;
+  }
+  #answerNowButton,
+  .modal-content .close-button {
+    width: 85%;
+    font-size: 1rem;
+    padding: 20px;
   }
 
-  body {
-    margin: 20px;
+  /*******page 2******/
+
+  .bar1 {
+    width: 80%;
+    flex-direction: row;
+  }
+  .bar1 .step-box {
+    margin: 10px;
+  }
+  .bar1 .step {
+    width: 50px;
+  }
+  /* .active {
+    border-color: #0074d9;
+  } */
+  .image-options {
+    width: 100%;
+    margin-top: 30px;
+  }
+  .image-row {
+    width: 100%;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+  }
+  .image-row img {
+    margin: auto;
+    width: 80%;
+    height: 90%;
+    max-width: none;
+  }
+  #nextButton1 {
+    width: 100%;
+    padding: 10px 20px;
   }
 
-  .spec-label {
-    padding: 5px;
-    font-size: 14px;
+  /*******page 3******/
+  .bar {
+    width: 80%;
+    flex-direction: column;
   }
-
-  /* Styling for specification values */
-  .spec-value {
+  .bar .step-box {
+    margin: 10px;
+  }
+  .bar .step {
+    width: 70px;
+  }
+  .bar .step-buttons {
+    display: flex;
+    order: -1;
+  }
+  .propellant-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* text-align: center !important; */
+  }
+  .propellant-container p {
+    grid-column: span 2;
+    font-style: italic;
     font-weight: bold;
-    padding: 5px;
-    font-size: 14px;
   }
-  .car-carousel.slick-initialized.slick-slider button.slick-prev {
-    left: 25px; /* Position the button to the left edge of the container */
+  .propellant-container label {
+    width: auto;
+    margin-bottom: 10px;
   }
+  .custom-checkbox {
+    height: 25px;
+    width: 25px;
+  }
+  .consumption-container,
+  .range-container {
+    margin-top: 8%;
+  }
+  .consumption-container p,
+  .range-container p {
+    font-size: 1.3rem;
+    color: var(--accent-color);
+  }
+  .consumption-container label,
+  .range-container label,
+  .budget-container label {
+    display: inline-block;
+    font-style: italic;
+    font-size: 0.85rem;
+    width: 250px;
+    margin-bottom: 10px;
+  }
+  .consumption-container input,
+  .range-container input {
+    margin-bottom: 10px;
+  }
+  .range-container #range-input,
+  .consumption-container #consumption-input,
+  .budget-container #budget-input {
+    padding: 8px 10px;
+    margin-right: 10px;
+    background-color: var(--lighter-black);
+  }
+  /* .range-value,
+  .consumption-range-value {
+    order: -1;
+  }  */
 
-  .car-carousel.slick-initialized.slick-slider button.slick-next {
-    right: 35px; /* Position the button to the left edge of the container */
+  #range,
+  #consumption-range,
+  #budget-range {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .budget-container p {
+    font-style: italic;
+    font-weight: bold;
+    margin-top: 10%;
   }
 }
